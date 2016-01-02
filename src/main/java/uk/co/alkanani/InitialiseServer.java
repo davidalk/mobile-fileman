@@ -5,10 +5,13 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import java.io.IOException;
 
 public class InitialiseServer {
     private static final Logger logger = LoggerFactory.getLogger(InitialiseServer.class);
@@ -29,12 +32,13 @@ public class InitialiseServer {
         server.join();
     }
 
-    private ServletContextHandler getServletContextHandler(WebApplicationContext context) {
+    private ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setErrorHandler(null);
         contextHandler.setContextPath("/");
         contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), "/*");
         contextHandler.addEventListener(new ContextLoaderListener(context));
+        contextHandler.setResourceBase(new ClassPathResource("webapp").getURI().toString());
         return contextHandler;
     }
 
