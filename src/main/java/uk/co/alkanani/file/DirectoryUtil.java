@@ -1,9 +1,13 @@
 package uk.co.alkanani.file;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import uk.co.alkanani.json.DirectoryJson;
 
+import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,11 +15,12 @@ import java.util.Queue;
 import static java.util.stream.StreamSupport.stream;
 
 public class DirectoryUtil {
+    private static final Logger logger = LoggerFactory.getLogger(DirectoryUtil.class);
 
     public static DirectoryJson buildDirectoryJsonTree() {
         FileSystem fileSystem = FileSystems.getDefault();
         DirectoryJson root = new DirectoryJson();
-        root.name = null;
+        root.name = fileSystem.getSeparator();
 
         Queue<DirectoryNode> pathQueue = new LinkedList<>();
 
@@ -32,7 +37,14 @@ public class DirectoryUtil {
             newDirectoryJson.name = currentDirectoryPath.getFileName().toString();
             parentDirectoryJson.subDirectories.add(newDirectoryJson);
 
-
+            try {
+                Files.list(currentDirectoryPath)
+                        .filter(path -> path.toFile().isDirectory())
+                        .map(path -> new DirectoryNode(newDirectoryJson, path))
+                        .forEach(pathQueue::add);
+            } catch (IOException e) {
+                logger.error("Failed to access file list", e);
+            }
 
         }
         return root;
