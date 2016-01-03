@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.stream.Stream;
 
 import static java.util.stream.StreamSupport.stream;
 
@@ -38,13 +39,14 @@ public class DirectoryUtil {
                     ? fileSystem.getSeparator() : currentDirectoryPath.getFileName().toString();
             parentDirectoryJson.subDirectories.add(newDirectoryJson);
 
-            try {
-                Files.list(currentDirectoryPath)
-                        .filter(path -> path.toFile().isDirectory())
+
+            try (Stream<Path> directoryStream = Files.list(currentDirectoryPath)) {
+                directoryStream
+                        .filter(path -> Files.isDirectory(path) && Files.isReadable(path) && !isHidden(path))
                         .map(path -> new DirectoryNode(newDirectoryJson, path))
                         .forEach(pathQueue::add);
             } catch (IOException e) {
-                logger.error("Failed to access file list", e);
+                logger.error("Failed to access directory stream", e);
             }
 
         }
@@ -58,6 +60,15 @@ public class DirectoryUtil {
         public DirectoryNode(DirectoryJson parentDirectoryJson, Path currentDirectoryPath) {
             this.parentDirectoryJson = parentDirectoryJson;
             this.currentDirectoryPath = currentDirectoryPath;
+        }
+    }
+
+    private static boolean isHidden(Path path) {
+        try {
+            return Files.isHidden(path);
+        } catch (IOException e) {
+            logger.error("Unable to check for hidden file", e);
+            return true;
         }
     }
 }
