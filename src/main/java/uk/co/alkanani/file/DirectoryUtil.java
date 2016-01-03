@@ -19,13 +19,13 @@ public class DirectoryUtil {
 
     public static DirectoryJson buildDirectoryJsonTree() {
         FileSystem fileSystem = FileSystems.getDefault();
-        DirectoryJson root = new DirectoryJson();
-        root.name = fileSystem.getSeparator();
+        DirectoryJson head = new DirectoryJson();
+        head.name = null;
 
         Queue<DirectoryNode> pathQueue = new LinkedList<>();
 
         stream(fileSystem.getRootDirectories().spliterator(), false)
-                .map(path -> new DirectoryNode(root, path))
+                .map(path -> new DirectoryNode(head, path))
                 .forEach(pathQueue::add);
 
         while (!pathQueue.isEmpty()) {
@@ -34,7 +34,8 @@ public class DirectoryUtil {
             Path currentDirectoryPath = directoryNode.currentDirectoryPath;
 
             DirectoryJson newDirectoryJson = new DirectoryJson();
-            newDirectoryJson.name = currentDirectoryPath.getFileName().toString();
+            newDirectoryJson.name = currentDirectoryPath.getFileName() == null
+                    ? fileSystem.getSeparator() : currentDirectoryPath.getFileName().toString();
             parentDirectoryJson.subDirectories.add(newDirectoryJson);
 
             try {
@@ -47,7 +48,7 @@ public class DirectoryUtil {
             }
 
         }
-        return root;
+        return head;
     }
 
     private static class DirectoryNode {
