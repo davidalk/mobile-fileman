@@ -90,7 +90,7 @@ public class DirectoryUtil {
     private static int getPathDepth(final Path startPath, final Path endPath) {
         int depth = 0;
         Path currentPath = endPath;
-        while ( currentPath != null  && !currentPath.equals(startPath)) {
+        while (currentPath != null  && !currentPath.equals(startPath)) {
             depth++;
             currentPath = currentPath.getParent();
         }
