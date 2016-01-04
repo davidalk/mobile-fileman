@@ -82,7 +82,7 @@ public class DirectoryUtil {
         try {
             return Files.isHidden(path);
         } catch (IOException e) {
-            logger.error("Unable to check for hidden file", e);
+            logger.error("Unable to check for hidden path", e);
             return true;
         }
     }
