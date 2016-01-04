@@ -25,9 +25,9 @@ public class DirectoryUtil {
         Queue<DirectoryNode> pathQueue = new LinkedList<>();
 
         Path startPath = fileSystem.getPath(start);
-        pathQueue.add(new DirectoryNode(head, startPath));
+        pathQueue.add(new DirectoryNode(head, startPath, 0));
 
-        while (getPathDepth(startPath, pathQueue.peek().currentDirectoryPath) <= depth) {
+        while (pathQueue.peek().depth <= depth) {
             DirectoryNode directoryNode = pathQueue.remove();
             DirectoryJson parentDirectoryJson = directoryNode.parentDirectoryJson;
             Path currentDirectoryPath = directoryNode.currentDirectoryPath;
@@ -41,7 +41,7 @@ public class DirectoryUtil {
             try (Stream<Path> directoryStream = Files.list(currentDirectoryPath)) {
                 directoryStream
                         .filter(path -> Files.isDirectory(path) && Files.isReadable(path) && !isHidden(path))
-                        .map(path -> new DirectoryNode(newDirectoryJson, path))
+                        .map(path -> new DirectoryNode(newDirectoryJson, path, directoryNode.depth + 1))
                         .forEach(pathQueue::add);
             } catch (IOException e) {
                 logger.error("Failed to access directory stream", e);
@@ -72,10 +72,12 @@ public class DirectoryUtil {
     private static class DirectoryNode {
         public DirectoryJson parentDirectoryJson;
         public Path currentDirectoryPath;
+        public int depth;
 
-        public DirectoryNode(DirectoryJson parentDirectoryJson, Path currentDirectoryPath) {
+        public DirectoryNode(DirectoryJson parentDirectoryJson, Path currentDirectoryPath, int depth) {
             this.parentDirectoryJson = parentDirectoryJson;
             this.currentDirectoryPath = currentDirectoryPath;
+            this.depth = depth;
         }
     }
 
@@ -86,16 +88,6 @@ public class DirectoryUtil {
             logger.error("Unable to check for hidden path", e);
             return true;
         }
-    }
-
-    private static int getPathDepth(final Path startPath, final Path endPath) {
-        int depth = 0;
-        Path currentPath = endPath;
-        while (currentPath != null  && !currentPath.equals(startPath)) {
-            depth++;
-            currentPath = currentPath.getParent();
-        }
-        return depth;
     }
 
 }
