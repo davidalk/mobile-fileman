@@ -13,23 +13,20 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.stream.Stream;
 
-import static java.util.stream.StreamSupport.stream;
-
 public class DirectoryUtil {
     private static final Logger logger = LoggerFactory.getLogger(DirectoryUtil.class);
 
-    public static DirectoryJson buildDirectoryJsonTree() {
+    public static DirectoryJson buildDirectoryJsonTree(String start, int depth) {
         FileSystem fileSystem = FileSystems.getDefault();
         DirectoryJson head = new DirectoryJson();
         head.name = null;
 
         Queue<DirectoryNode> pathQueue = new LinkedList<>();
 
-        stream(fileSystem.getRootDirectories().spliterator(), false)
-                .map(path -> new DirectoryNode(head, path))
-                .forEach(pathQueue::add);
+        Path startPath = fileSystem.getPath(start);
+        pathQueue.add(new DirectoryNode(head, startPath));
 
-        while (!pathQueue.isEmpty()) {
+        while (getPathDepth(startPath, pathQueue.peek().currentDirectoryPath) <= depth) {
             DirectoryNode directoryNode = pathQueue.remove();
             DirectoryJson parentDirectoryJson = directoryNode.parentDirectoryJson;
             Path currentDirectoryPath = directoryNode.currentDirectoryPath;
@@ -53,6 +50,24 @@ public class DirectoryUtil {
         return head;
     }
 
+    public static DirectoryJson buildDirectoryJsonTree() {
+        FileSystem fileSystem = FileSystems.getDefault();
+        String start = fileSystem.getSeparator();
+
+        return buildDirectoryJsonTree(start, 3);
+    }
+
+    public static DirectoryJson buildDirectoryJsonTree(String start) {
+        return buildDirectoryJsonTree(start, 3);
+    }
+
+    public static DirectoryJson buildDirectoryJsonTree(int depth) {
+        FileSystem fileSystem = FileSystems.getDefault();
+        String start = fileSystem.getSeparator();
+
+        return buildDirectoryJsonTree(start, depth);
+    }
+
     private static class DirectoryNode {
         public DirectoryJson parentDirectoryJson;
         public Path currentDirectoryPath;
@@ -71,4 +86,15 @@ public class DirectoryUtil {
             return true;
         }
     }
+
+    private static int getPathDepth(final Path startPath, final Path endPath) {
+        int depth = 0;
+        Path currentPath = endPath;
+        while ( currentPath != null  && !currentPath.equals(startPath)) {
+            depth++;
+            currentPath = currentPath.getParent();
+        }
+        return depth;
+    }
+
 }
