@@ -87,6 +87,10 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
+            <resource>
+                <targetPath>static</targetPath>
+                <directory>src/main/static</directory>
+            </resource>
         </resources>
 
         <plugins>
