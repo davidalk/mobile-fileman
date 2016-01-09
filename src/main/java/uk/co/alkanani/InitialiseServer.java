@@ -22,24 +22,34 @@ import java.io.IOException;
 public class InitialiseServer {
     private static final Logger logger = LoggerFactory.getLogger(InitialiseServer.class);
 
-    private InitialiseServer() {}
+    private InitialiseServer() {
+    }
 
     public static void main(String... args) {
         try {
+            boolean staticContent = true;
+
+            if (args.length > 0  && args[0].equals("noStatic")) {
+                staticContent = false;
+            }
+
             InitialiseServer initialiseServer = new InitialiseServer();
-            initialiseServer.startServer();
+            initialiseServer.startServer(staticContent);
         } catch (Exception e) {
             logger.error("Error starting server", e);
             throw new RuntimeException(e);
         }
     }
 
-    private void startServer() throws Exception {
+    private void startServer(boolean staticContent) throws Exception {
         Server server = new Server(8080);
 
         HandlerCollection handlerCollection = new HandlerCollection();
         handlerCollection.addHandler(getServletContextHandler(new XmlWebApplicationContext()));
-        handlerCollection.addHandler(getStaticHandler());
+
+        if (staticContent) {
+            handlerCollection.addHandler(getStaticHandler());
+        }
 
         server.setHandler(handlerCollection);
         server.start();
@@ -59,12 +69,12 @@ public class InitialiseServer {
     private Handler getStaticHandler() throws Exception {
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);
-        resourceHandler.setWelcomeFiles(new String[]{ "index.html" });
+        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
         resourceHandler.setResourceBase(new ClassPathResource("static/app").getURI().toString());
 
         GzipHandler gzip = new GzipHandler();
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[] { resourceHandler, new DefaultHandler() });
+        handlers.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
         gzip.setHandler(handlers);
 
         return gzip;
