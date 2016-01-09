@@ -3,6 +3,7 @@ package uk.co.alkanani;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
@@ -26,17 +27,21 @@ public class InitialiseServer {
     public static void main(String... args) {
         try {
             InitialiseServer initialiseServer = new InitialiseServer();
-            initialiseServer.startWebApp();
-            initialiseServer.startStaticServer();
+            initialiseServer.startServer();
         } catch (Exception e) {
             logger.error("Error starting server", e);
             throw new RuntimeException(e);
         }
     }
 
-    private void startWebApp() throws Exception {
+    private void startServer() throws Exception {
         Server server = new Server(8080);
-        server.setHandler(getServletContextHandler(new XmlWebApplicationContext()));
+
+        HandlerCollection handlerCollection = new HandlerCollection();
+        handlerCollection.addHandler(getServletContextHandler(new XmlWebApplicationContext()));
+        handlerCollection.addHandler(getStaticHandler());
+
+        server.setHandler(handlerCollection);
         server.start();
         server.join();
     }
@@ -44,28 +49,25 @@ public class InitialiseServer {
     private ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setErrorHandler(null);
-        contextHandler.setContextPath("/");
+        contextHandler.setContextPath("/webapp");
         contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), "/*");
         contextHandler.addEventListener(new ContextLoaderListener(context));
         contextHandler.setResourceBase(new ClassPathResource("webapp").getURI().toString());
         return contextHandler;
     }
 
-    private void startStaticServer() throws Exception {
-        Server server = new Server(80);
-        ResourceHandler resource_handler = new ResourceHandler();
-        resource_handler.setDirectoriesListed(true);
-        resource_handler.setWelcomeFiles(new String[]{ "index.html" });
-        resource_handler.setResourceBase(new ClassPathResource("static/app").getURI().toString());
+    private Handler getStaticHandler() throws Exception {
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirectoriesListed(true);
+        resourceHandler.setWelcomeFiles(new String[]{ "index.html" });
+        resourceHandler.setResourceBase(new ClassPathResource("static/app").getURI().toString());
 
         GzipHandler gzip = new GzipHandler();
-        server.setHandler(gzip);
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[] { resource_handler, new DefaultHandler() });
+        handlers.setHandlers(new Handler[] { resourceHandler, new DefaultHandler() });
         gzip.setHandler(handlers);
 
-        server.start();
-        server.join();
+        return gzip;
     }
 
 }
