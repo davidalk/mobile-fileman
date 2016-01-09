@@ -1,6 +1,11 @@
 package uk.co.alkanani;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.slf4j.Logger;
@@ -16,9 +21,13 @@ import java.io.IOException;
 public class InitialiseServer {
     private static final Logger logger = LoggerFactory.getLogger(InitialiseServer.class);
 
+    private InitialiseServer() {}
+
     public static void main(String... args) {
         try {
-            new InitialiseServer().startWebApp();
+            InitialiseServer initialiseServer = new InitialiseServer();
+            initialiseServer.startWebApp();
+            initialiseServer.startStaticServer();
         } catch (Exception e) {
             logger.error("Error starting server", e);
             throw new RuntimeException(e);
@@ -42,5 +51,21 @@ public class InitialiseServer {
         return contextHandler;
     }
 
+    private void startStaticServer() throws Exception {
+        Server server = new Server(80);
+        ResourceHandler resource_handler = new ResourceHandler();
+        resource_handler.setDirectoriesListed(true);
+        resource_handler.setWelcomeFiles(new String[]{ "index.html" });
+        resource_handler.setResourceBase(new ClassPathResource("static/app").getURI().toString());
+
+        GzipHandler gzip = new GzipHandler();
+        server.setHandler(gzip);
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[] { resource_handler, new DefaultHandler() });
+        gzip.setHandler(handlers);
+
+        server.start();
+        server.join();
+    }
 
 }
