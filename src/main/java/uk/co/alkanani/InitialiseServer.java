@@ -32,6 +32,8 @@ public class InitialiseServer {
             if (args.length > 0  && args[0].equals("noStatic")) {
                 logger.info("Starting without static content handler");
                 staticContent = false;
+            } else {
+                logger.info("Starting static and servlet handlers");
             }
 
             InitialiseServer initialiseServer = new InitialiseServer();
