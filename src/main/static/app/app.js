@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ngRoute',
     'myApp.fileman',
     'myApp.chooser',
+    'ui.bootstrap',
     'myApp.version'
 ]).
 config(['$routeProvider', function ($routeProvider) {
