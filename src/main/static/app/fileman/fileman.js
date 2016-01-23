@@ -2,22 +2,26 @@
 
 angular.module('myApp.fileman', ['ngRoute', 'ui.router'])
 
-    .config(['$routeProvider', '$stateProvider', function ($routeProvider, $stateProvider) {
+    .config([
+        '$routeProvider',
+        '$stateProvider',
+        function ($routeProvider, $stateProvider) {
 
-        $routeProvider.when('/fileman', {
-            templateUrl: "fileman/fileman.html",
-            controller: "FilemanCtrl"
-        });
+            $routeProvider.when('/fileman', {
+                templateUrl: "fileman/fileman.html",
+                controller: "FilemanCtrl"
+            });
 
-        $stateProvider.state('leftchooser', {
-            url: "/fileman/leftchooser",
-            views: {
-                "leftChooserView": { templateUrl: "chooser/chooser.html"}
-            }
-        });
-    }])
+            $stateProvider.state('leftchooser', {
+                url: "/fileman/leftchooser",
+                views: {
+                    "leftChooserView": {templateUrl: "chooser/chooser.html"}
+                }
+            });
 
-    .controller('FilemanCtrl', [function () {
+        }])
 
+    .controller('FilemanCtrl', ['$state', function ($state) {
+        $state.go('leftchooser');
     }]);
 
