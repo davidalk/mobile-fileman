@@ -1,15 +1,23 @@
 'use strict';
 
-var fileman = angular.module('myApp.fileman', ['ngRoute'])
+angular.module('myApp.fileman', ['ngRoute', 'ui.router'])
 
-fileman.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/fileman', {
-        templateUrl: 'fileman/fileman.html',
-        controller: 'FilemanCtrl'
-    });
-}]);
+    .config(['$routeProvider', '$stateProvider', function ($routeProvider, $stateProvider) {
 
-fileman.controller('FilemanCtrl', [function () {
+        $routeProvider.when('/fileman', {
+            templateUrl: "fileman/fileman.html",
+            controller: "FilemanCtrl"
+        });
 
-}]);
+        $stateProvider.state('leftchooser', {
+            url: "/fileman/leftchooser",
+            views: {
+                "leftChooserView": { templateUrl: "chooser/chooser.html"}
+            }
+        });
+    }])
+
+    .controller('FilemanCtrl', [function () {
+
+    }]);
 
