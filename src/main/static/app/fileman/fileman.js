@@ -12,16 +12,18 @@ angular.module('myApp.fileman', ['ngRoute', 'ui.router'])
                 controller: "FilemanCtrl"
             });
 
-            $stateProvider.state('leftchooser', {
-                url: "/fileman/leftchooser",
+            $stateProvider.state('fileman', {
                 views: {
-                    "leftChooserView": {templateUrl: "chooser/chooser.html"}
+                    "leftChooserView": {
+                        templateUrl: "chooser/chooser.html",
+                        controller: "ChooserCtrl"
+                    }
                 }
             });
 
         }])
 
     .controller('FilemanCtrl', ['$state', function ($state) {
-        $state.go('leftchooser');
+        $state.go('fileman');
     }]);
 
