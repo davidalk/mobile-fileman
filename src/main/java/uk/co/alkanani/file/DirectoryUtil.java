@@ -27,7 +27,7 @@ public class DirectoryUtil {
         Path startPath = fileSystem.getPath(start);
         pathQueue.add(new DirectoryNode(head, startPath, 0));
 
-        while (pathQueue.peek().depth <= depth) {
+        while (!pathQueue.isEmpty() && pathQueue.peek().depth <= depth) {
             DirectoryNode directoryNode = pathQueue.remove();
             DirectoryJson parentDirectoryJson = directoryNode.parentDirectoryJson;
             Path currentDirectoryPath = directoryNode.currentDirectoryPath;
@@ -48,7 +48,8 @@ public class DirectoryUtil {
             }
 
         }
-        return head;
+
+        return head;ix
     }
 
     public static DirectoryJson buildDirectoryJsonTree() {
