@@ -49,7 +49,7 @@ public class DirectoryUtil {
 
         }
 
-        return head;ix
+        return head;
     }
 
     public static DirectoryJson buildDirectoryJsonTree() {
