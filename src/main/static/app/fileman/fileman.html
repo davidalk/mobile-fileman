@@ -11,11 +11,11 @@
     <div class="row top-buffer">
 
         <div class="col-md-6">
-            <div ui-view="leftChooserView"></div>
+            <div ui-view="leftChooserView" onload="side='left'"></div>
         </div>
 
         <div class="col-md-6">
-            <span>Right hand chooser stub</span>
+            <div ui-view="rightChooserView" onload="side='right'"></div>
         </div>
 
     </div>

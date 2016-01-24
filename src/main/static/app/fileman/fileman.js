@@ -14,7 +14,11 @@ angular.module('myApp.fileman', ['ngRoute', 'ui.router'])
 
             $stateProvider.state('fileman', {
                 views: {
-                    "leftChooserView": {
+                    leftChooserView: {
+                        templateUrl: "chooser/chooser.html",
+                        controller: "ChooserCtrl"
+                    },
+                    rightChooserView: {
                         templateUrl: "chooser/chooser.html",
                         controller: "ChooserCtrl"
                     }

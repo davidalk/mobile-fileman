@@ -3,7 +3,7 @@
 angular.module('myApp.chooser', ['ui.router'])
 
 
-    .controller('ChooserCtrl', ['$state',
-        function ($state) {
+    .controller('ChooserCtrl', ['$scope', '$state',
+        function ($scope, $state) {
 
         }]);
