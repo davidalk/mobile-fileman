@@ -1,7 +1,4 @@
 {
-  "directory": "app/bower_components",
-  "ignoredDependencies": [
-    "jquery"
-  ]
+  "directory": "app/bower_components"
 
 }

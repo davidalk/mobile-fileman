@@ -1,3 +1,18 @@
 <div ng-controller="ChooserCtrl">
-    <p>This is the {{side}} chooser page!!</p>
+
+    <script type="text/ng-template" id="chooserModal.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title">Choose Directory</h3>
+        </div>
+
+        <div class="modal-body">
+            <ul>
+                <li>element 1</li>
+                <li>element 2</li>
+            </ul>
+        </div>
+    </script>
+
+    <div class="Chooser"><a href="#" ng-click="open('lg')">This is the {{side}} chooser page!!</a></div>
 </div>
