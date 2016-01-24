@@ -14,5 +14,18 @@
         </div>
     </script>
 
-    <div class="Chooser"><a href="#" ng-click="open('lg')">This is the {{side}} chooser page!!</a></div>
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-primary" ng-click="open('lg')">
+                <span class="glyphicon glyphicon-folder-open"></span>
+            </button>
+        </span>
+
+        <input title="{{side}}Directory"
+               type="text"
+               class="form-control"
+               aria-describedby="chooser-addon"
+               value="This is the {{side}} chooser page!!"
+               readonly>
+    </div>
 </div>
