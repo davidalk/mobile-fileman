@@ -33,7 +33,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$uibModalInstance',
         function ($scope, $http, $uibModalInstance) {
 
-            var directory = $http.get('http://localhost:8080/webapp/directories/')
+            $http.get('http://localhost:8080/webapp/directories/')
                 .then(function successCallback(response) {
                     //noinspection JSUnresolvedVariable
                         $scope.directories = response.data.subDirectories;
