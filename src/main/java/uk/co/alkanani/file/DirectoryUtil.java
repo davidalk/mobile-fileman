@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 public class DirectoryUtil {
     private static final Logger logger = LoggerFactory.getLogger(DirectoryUtil.class);
-    public static final int DEFAULT_DEPTH = 3;
+    public static final int DEFAULT_DEPTH = 1;
 
     public static DirectoryJson buildDirectoryJsonTree(String start, int depth) {
         FileSystem fileSystem = FileSystems.getDefault();

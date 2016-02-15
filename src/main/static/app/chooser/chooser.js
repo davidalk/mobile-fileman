@@ -29,8 +29,20 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
 
     .controller('ChooserModalCtrl', [
         '$scope',
+        '$http',
         '$uibModalInstance',
-        function ($scope, $uibModalInstance) {
+        function ($scope, $http, $uibModalInstance) {
+
+            var directory = $http.get('http://localhost:8080/webapp/directories/')
+                .then(function successCallback(response) {
+                    //noinspection JSUnresolvedVariable
+                        $scope.directories = response.data.subDirectories;
+                },
+                function errorCallback(response) {
+
+                });
+
+
             $scope.ok = function () {
                 $uibModalInstance.close('ok');
             };
