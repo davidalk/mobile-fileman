@@ -6,9 +6,16 @@
             <h3 class="modal-title">Choose Directory</h3>
         </div>
 
+        <div class="row">
+            <span class="col-md-2">Currently selected:</span>
+            <span class="col-md-10">{{fullPath}}</span>
+        </div>
+
         <div class="modal-body">
             <ul class="list-unstyled">
-                <li ng-repeat="directory in directories">{{directory.name}}</li>
+                <li ng-repeat="directory in directories" class="row">
+                    <a class="col-lg-2" href="" ng-click="getDirectories(fullPath + directory.name + '/')">{{directory.name}}</a>
+                </li>
             </ul>
         </div>
     </script>

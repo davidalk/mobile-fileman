@@ -32,15 +32,36 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$http',
         '$uibModalInstance',
         function ($scope, $http, $uibModalInstance) {
+            var dirRestUrl = 'http://localhost:8080/webapp/directories/';
 
-            $http.get('http://localhost:8080/webapp/directories/')
-                .then(function successCallback(response) {
-                    //noinspection JSUnresolvedVariable
-                        $scope.directories = response.data.subDirectories;
-                },
-                function errorCallback(response) {
+            $scope.getDirectories = function (startPath) {
+                var callUrl = dirRestUrl;
 
-                });
+                if (typeof startPath === 'string') {
+                    callUrl += '?startPath=' + startPath;
+                }
+
+                $http.get(callUrl)
+                    .then(function successCallback(response) {
+                            if (startPath === undefined) {
+                                //noinspection JSUnresolvedVariable
+                                $scope.directories = response.data.subDirectories;
+                            } else {
+                                //noinspection JSUnresolvedVariable
+                                $scope.directories = response.data.subDirectories[0].subDirectories;
+                                $scope.fullPath = startPath;
+                            }
+                        },
+                        function errorCallback(response) {
+                            if (typeof callUrl === 'string') {
+                                $scope.getDirectories();
+                            } else {
+                                console.log(response);
+                            }
+                        });
+            };
+
+            $scope.getDirectories();
 
 
             $scope.ok = function () {
