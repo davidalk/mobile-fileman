@@ -33,12 +33,19 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$uibModalInstance',
         function ($scope, $http, $uibModalInstance) {
             var dirRestUrl = 'http://localhost:8080/webapp/directories/';
+            $scope.currentPath = '';
 
             $scope.getDirectories = function (startPath) {
                 var callUrl = dirRestUrl;
 
                 if (typeof startPath === 'string') {
-                    callUrl += '?startPath=' + startPath;
+                    callUrl += '?startPath=';
+                    if (startPath === '/') {
+                        callUrl += '/'
+                    } else {
+                        callUrl += $scope.currentPath + startPath + '/'
+                    }
+
                 }
 
                 $http.get(callUrl)
@@ -49,7 +56,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
                             } else {
                                 //noinspection JSUnresolvedVariable
                                 $scope.directories = response.data.subDirectories[0].subDirectories;
-                                $scope.fullPath = startPath;
+                                $scope.currentPath += startPath === '/' ? '/' : startPath + '/';
                             }
                         },
                         function errorCallback(response) {
