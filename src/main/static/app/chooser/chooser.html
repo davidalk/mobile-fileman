@@ -18,6 +18,11 @@
                 </li>
             </ul>
         </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
     </script>
 
     <div class="input-group">
@@ -30,7 +35,7 @@
         <input title="{{side}}Directory"
                type="text"
                class="form-control"
-               value="This is the {{side}} chooser text"
+               value="{{side === 'left' ? leftSelectedDirectory : rightSelectedDirectory}}"
                readonly>
     </div>
 </div>
