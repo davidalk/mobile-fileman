@@ -30,7 +30,8 @@ angular.module('myApp.fileman', ['ui.router'])
             $state.go('fileman');
         }])
     .controller('FilemanCtrl', [
-        '$log', function ($log) {
-        $log.info('FilemanCtrl');
-    }]);
+        '$log',
+        function ($log) {
+            $log.info('FilemanCtrl');
+        }]);
 
