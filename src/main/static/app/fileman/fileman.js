@@ -1,18 +1,13 @@
 'use strict';
 
-angular.module('myApp.fileman', ['ngRoute', 'ui.router'])
+angular.module('myApp.fileman', ['ui.router'])
 
     .config([
-        '$routeProvider',
         '$stateProvider',
-        function ($routeProvider, $stateProvider) {
-
-            $routeProvider.when('/fileman', {
-                templateUrl: "fileman/fileman.html",
-                controller: "FilemanCtrl"
-            });
+        function ($stateProvider) {
 
             $stateProvider.state('fileman', {
+                url: "/fileman",
                 views: {
                     leftChooserView: {
                         templateUrl: "chooser/chooser.html",
@@ -25,8 +20,8 @@ angular.module('myApp.fileman', ['ngRoute', 'ui.router'])
                 }
             });
 
-        }])
-
+        }
+    ])
     .controller('FilemanCtrl', ['$state', function ($state) {
         $state.go('fileman');
     }]);
