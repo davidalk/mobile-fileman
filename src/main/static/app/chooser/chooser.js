@@ -9,6 +9,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$uibModal',
         '$log',
         function ($scope, $rootScope, $uibModal, $log) {
+            console.log('ChooserCtrl');
 
             $rootScope.$on('chooser:directorySelected', function (event, selectedDirectory) {
                 if ($scope.side === 'left') {
@@ -40,7 +41,9 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$scope',
         '$http',
         '$uibModalInstance',
-        function ($scope, $http, $uibModalInstance) {
+        '$log',
+        function ($scope, $http, $uibModalInstance, $log) {
+            $log.info('ChooserModalCtrl');
             var dirRestUrl = 'http://localhost:8080/webapp/directories/';
             $scope.currentPath = '';
 
@@ -72,7 +75,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
                             if (typeof callUrl === 'string') {
                                 $scope.getDirectories();
                             } else {
-                                console.log(response);
+                                $log.info(response);
                             }
                         });
             };

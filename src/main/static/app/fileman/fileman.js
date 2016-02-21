@@ -22,7 +22,15 @@ angular.module('myApp.fileman', ['ui.router'])
 
         }
     ])
-    .controller('FilemanCtrl', ['$state', function ($state) {
-        $state.go('fileman');
+    .run([
+        '$state',
+        '$log',
+        function ($state, $log) {
+            $log.info('FilemanCtrl run()');
+            $state.go('fileman');
+        }])
+    .controller('FilemanCtrl', [
+        '$log', function ($log) {
+        $log.info('FilemanCtrl');
     }]);
 
