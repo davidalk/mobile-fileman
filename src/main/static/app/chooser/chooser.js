@@ -10,7 +10,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$log',
         function ($scope, $rootScope, $uibModal, $log) {
 
-            $rootScope.$on('directorySelected', function (event, selectedDirectory) {
+            $rootScope.$on('chooser:directorySelected', function (event, selectedDirectory) {
                 if ($scope.side === 'left') {
                     $scope.leftSelectedDirectory = selectedDirectory;
                 } else {
@@ -81,7 +81,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
 
 
             $scope.ok = function () {
-                $scope.$emit('directorySelected', $scope.currentPath);
+                $scope.$emit('chooser:directorySelected', $scope.currentPath);
                 $uibModalInstance.close('ok');
             };
 
