@@ -6,7 +6,7 @@ angular.module('myApp.fileman', ['ui.router'])
         '$stateProvider',
         function ($stateProvider) {
 
-            $stateProvider.state('fileman', {
+            $stateProvider.state('main.fileman', {
                 url: "/fileman",
                 views: {
                     leftChooserView: {
@@ -22,13 +22,6 @@ angular.module('myApp.fileman', ['ui.router'])
 
         }
     ])
-    .run([
-        '$state',
-        '$log',
-        function ($state, $log) {
-            $log.info('FilemanCtrl run()');
-            $state.go('fileman');
-        }])
     .controller('FilemanCtrl', [
         '$log',
         function ($log) {

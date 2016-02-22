@@ -4,13 +4,16 @@
 angular.module('myApp', [
     'myApp.fileman',
     'myApp.chooser',
-    'ngRoute',
+    'ui.router',
     'myApp.version'
-]).config(['$routeProvider', function ($routeProvider) {
+]).config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
 
-    $routeProvider.when('/fileman', {
-        templateUrl: "fileman/fileman.html",
-        controller: "FilemanCtrl"
-    }).otherwise('/fileman');
+        $stateProvider.state('main', {
+            abstract: true,
+            templateUrl: 'fileman/fileman.html',
+            controller: 'FilemanCtrl'
+        });
 
-}]);
+        $urlRouterProvider.otherwise('/fileman');
+
+    }]);
