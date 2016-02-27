@@ -17,14 +17,19 @@ angular.module('myApp.fileman', ['ui.router'])
 
     .controller('FilemanCtrl', [
         '$log',
-        function ($log) {
+        '$scope',
+        function ($log, $scope) {
             $log.info('FilemanCtrl');
+            $scope.left = 'leftChooser';
+            $scope.right = 'rightChooser';
         }])
 
     .directive('directoryChooser', function () {
         return {
             restrict: 'E',
-            scope: {},
+            scope: {
+                side: '='
+            },
             controller: 'ChooserCtrl',
             templateUrl: 'chooser/chooser.html'
         };
