@@ -6,14 +6,8 @@ angular.module('myApp', [
     'myApp.chooser',
     'ui.router',
     'myApp.version'
-]).config(['$urlRouterProvider', '$stateProvider', function ($urlRouterProvider, $stateProvider) {
+]).config(['$urlRouterProvider', function ($urlRouterProvider) {
 
-        $stateProvider.state('main', {
-            abstract: true,
-            templateUrl: 'fileman/fileman.html',
-            controller: 'FilemanCtrl'
-        });
+    $urlRouterProvider.otherwise('/fileman');
 
-        $urlRouterProvider.otherwise('/fileman');
-
-    }]);
+}]);

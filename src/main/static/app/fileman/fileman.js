@@ -6,25 +6,36 @@ angular.module('myApp.fileman', ['ui.router'])
         '$stateProvider',
         function ($stateProvider) {
 
-            $stateProvider.state('main.fileman', {
+            $stateProvider.state('fileman', {
                 url: "/fileman",
-                views: {
-                    leftChooserView: {
-                        templateUrl: "chooser/chooser.html",
-                        controller: "ChooserCtrl"
-                    },
-                    rightChooserView: {
-                        templateUrl: "chooser/chooser.html",
-                        controller: "ChooserCtrl"
-                    }
-                }
+                templateUrl: 'fileman/fileman.html',
+                controller: 'FilemanCtrl'
             });
 
         }
     ])
+
     .controller('FilemanCtrl', [
         '$log',
         function ($log) {
             $log.info('FilemanCtrl');
-        }]);
+        }])
+
+    .directive('leftChooser', function () {
+        return {
+            restrict: 'E',
+            scope: {},
+            controller: 'ChooserCtrl',
+            templateUrl: 'chooser/chooser.html'
+        };
+    })
+
+    .directive('rightChooser', function () {
+        return {
+            restrict: 'E',
+            scope: {},
+            controller: 'ChooserCtrl',
+            templateUrl: 'chooser/chooser.html'
+        };
+    });
 

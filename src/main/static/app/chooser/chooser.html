@@ -14,7 +14,7 @@
 
             <ul class="list-unstyled">
                 <li ng-repeat="directory in directories" class="row">
-                    <a class="col-lg-2" href="" ng-click="getDirectories(directory.name)">{{directory.name}}</a>
+                    <a class="col-md-12" href="" ng-click="getDirectories(directory.name)">{{directory.name}}</a>
                 </li>
             </ul>
         </div>
@@ -32,10 +32,10 @@
             </button>
         </span>
 
-        <input title="{{side}}Directory"
+        <input title="directory"
                type="text"
                class="form-control"
-               value="{{side === 'left' ? leftSelectedDirectory : rightSelectedDirectory}}"
+               value="{{selectedDirectory}}"
                readonly>
     </div>
 </div>
