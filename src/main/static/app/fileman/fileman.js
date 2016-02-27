@@ -21,16 +21,7 @@ angular.module('myApp.fileman', ['ui.router'])
             $log.info('FilemanCtrl');
         }])
 
-    .directive('leftChooser', function () {
-        return {
-            restrict: 'E',
-            scope: {},
-            controller: 'ChooserCtrl',
-            templateUrl: 'chooser/chooser.html'
-        };
-    })
-
-    .directive('rightChooser', function () {
+    .directive('directoryChooser', function () {
         return {
             restrict: 'E',
             scope: {},
