@@ -76,6 +76,20 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
                         });
             };
 
+            $scope.getParentDirectories = function () {
+                var newStartPath;
+
+                if ($scope.currentPath === '/' || $scope.currentPath === '') {
+                    $scope.currentPath = '';
+                    $scope.getDirectories();
+                } else {
+                    newStartPath = $scope.currentPath.split(/\//);
+                    newStartPath = newStartPath[newStartPath.length - 3];
+                    $scope.currentPath = $scope.currentPath.replace(/[^\/]+\/$/g, '');
+                    $scope.getDirectories(newStartPath);
+                }
+            };
+
             $scope.getDirectories();
 
 

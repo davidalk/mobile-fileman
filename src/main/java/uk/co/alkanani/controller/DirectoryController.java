@@ -1,29 +1,38 @@
 package uk.co.alkanani.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 import uk.co.alkanani.file.DirectoryUtil;
-import uk.co.alkanani.json.DirectoryJson;
+import uk.co.alkanani.json.SubDirectoriesJson;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "/directories", produces = "application/json")
 public class DirectoryController {
+    private static final Logger logger = LoggerFactory.getLogger(DirectoryController.class);
+
+    @RequestMapping(method = RequestMethod.GET)
+    public void get(HttpServletResponse response) {
+        try {
+            logger.info("Redirecting /directories to /directories/");
+            response.sendRedirect("/webapp/directories/");
+        } catch (IOException e) {
+            logger.error("Redirect to /directories/ failed", e);
+        }
+    }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public DirectoryJson getDirectories(
-            @RequestParam(name = "startPath", required = false) String startPath,
-            @RequestParam(name = "depth", required = false) String depth) {
+    public SubDirectoriesJson getRootSubdirectories() {
+        return DirectoryUtil.getSubDirectories("/");
+    }
 
-        if (startPath != null && depth != null) {
-            return DirectoryUtil.buildDirectoryJsonTree(startPath, Integer.valueOf(depth));
-        } else if (startPath == null && depth == null) {
-            return DirectoryUtil.buildDirectoryJsonTree();
-        } else if (depth == null) {
-            return DirectoryUtil.buildDirectoryJsonTree(startPath);
-        } else {
-            return DirectoryUtil.buildDirectoryJsonTree(Integer.valueOf(depth));
-        }
+    @RequestMapping(path= "/**", method = RequestMethod.GET)
+    public SubDirectoriesJson getSubDirectories(HttpServletRequest request) {
+        String path = request.getPathInfo();
+        return DirectoryUtil.getSubDirectories(path.replaceFirst("/directories", ""));
     }
 }
