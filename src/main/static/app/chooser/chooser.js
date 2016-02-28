@@ -73,11 +73,10 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
 
                 if ($scope.currentPath === '/' || $scope.currentPath === '') {
                     $scope.currentPath = '';
-                    $scope.getDirectories();
+                    $scope.getDirectories('/');
                 } else {
-                    newStartPath = $scope.currentPath.split(/\//);
-                    newStartPath = newStartPath[newStartPath.length - 3];
-                    $scope.currentPath = $scope.currentPath.replace(/[^\/]+\/$/g, '');
+                    newStartPath = $scope.currentPath.replace(/(.+)\/.+?$/, '$1');
+                    $scope.currentPath = '';
                     $scope.getDirectories(newStartPath);
                 }
             };
