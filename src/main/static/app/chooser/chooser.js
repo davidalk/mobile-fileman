@@ -40,39 +40,31 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
         '$log',
         function ($scope, $http, $uibModalInstance, $log) {
             $log.info('ChooserModalCtrl');
-            var dirRestUrl = 'http://localhost:8080/webapp/directories/';
+            var dirRestUrl = 'http://localhost:8080/webapp/directories';
+
             $scope.currentPath = '';
 
             $scope.getDirectories = function (startPath) {
-                var callUrl = dirRestUrl;
+                var pathPart;
 
-                if (typeof startPath === 'string') {
-                    callUrl += '?startPath=';
-                    if (startPath === '/') {
-                        callUrl += '/'
-                    } else {
-                        callUrl += $scope.currentPath + startPath + '/'
-                    }
-
+                if ($scope.currentPath === '') {
+                    pathPart = startPath;
+                } else if ($scope.currentPath === '/') {
+                    pathPart = $scope.currentPath + startPath;
+                } else {
+                    pathPart = $scope.currentPath + '/' + startPath;
                 }
+
+                var callUrl = dirRestUrl + pathPart;
 
                 $http.get(callUrl)
                     .then(function successCallback(response) {
-                            if (startPath === undefined) {
-                                //noinspection JSUnresolvedVariable
-                                $scope.directories = response.data.subDirectories;
-                            } else {
-                                //noinspection JSUnresolvedVariable
-                                $scope.directories = response.data.subDirectories[0].subDirectories;
-                                $scope.currentPath += startPath === '/' ? '/' : startPath + '/';
-                            }
+                            //noinspection JSUnresolvedVariable
+                            $scope.directories = response.data.subDirectories;
+                            $scope.currentPath = pathPart;
                         },
                         function errorCallback(response) {
-                            if (typeof callUrl === 'string') {
-                                $scope.getDirectories();
-                            } else {
-                                $log.info(response);
-                            }
+                            $log.error(response);
                         });
             };
 
@@ -90,8 +82,7 @@ angular.module('myApp.chooser', ['ui.bootstrap'])
                 }
             };
 
-            $scope.getDirectories();
-
+            $scope.directories = ['/'];
 
             $scope.ok = function () {
                 $scope.$emit('chooser:directorySelected', $scope.currentPath);
