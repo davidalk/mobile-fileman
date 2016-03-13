@@ -1,35 +1,44 @@
 'use strict';
 
-angular.module('myApp.chooser', ['ui.bootstrap'])
+angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
 
 
     .controller('ChooserCtrl', [
         '$scope',
         '$uibModal',
+        '$mdSidenav',
         '$log',
-        function ($scope, $uibModal, $log) {
+        function ($scope, $uibModal, $mdSidenav, $log) {
             console.log('ChooserCtrl');
 
             $scope.$on('chooser:directorySelected', function (event, selectedDirectory) {
                 $scope.selectedDirectory = selectedDirectory;
             });
 
-            $scope.open = function (size) {
+            //$scope.open = function (size) {
+            //
+            //    var modalInstance = $uibModal.open({
+            //        animation: true,
+            //        templateUrl: "chooserModal.html",
+            //        controller: "ChooserModalCtrl",
+            //        scope: $scope,
+            //        size: size
+            //    });
+            //
+            //    modalInstance.result.then(function () {
+            //        $log.info('modal instance selected');
+            //    }, function () {
+            //        $log.info('modal instance dismissed');
+            //    });
+            //};
 
-                var modalInstance = $uibModal.open({
-                    animation: true,
-                    templateUrl: "chooserModal.html",
-                    controller: "ChooserModalCtrl",
-                    scope: $scope,
-                    size: size
-                });
-
-                modalInstance.result.then(function () {
-                    $log.info('modal instance selected');
-                }, function () {
-                    $log.info('modal instance dismissed');
-                });
-            };
+            $scope.toggle = function () {
+                $mdSidenav($scope.side)
+                    .toggle()
+                    .then(function () {
+                        $log.debug("toggle " + $scope.side + " is done");
+                    });
+            }
 
         }])
 

@@ -2,13 +2,11 @@ package uk.co.alkanani;
 
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.server.handler.gzip.GzipHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -70,17 +68,20 @@ public class InitialiseServer {
     }
 
     private Handler getStaticHandler() throws Exception {
-        ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setDirectoriesListed(true);
-        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
-        resourceHandler.setResourceBase(new ClassPathResource("static/app").getURI().toString());
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
 
-        GzipHandler gzip = new GzipHandler();
-        HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{resourceHandler, new DefaultHandler()});
-        gzip.setHandler(handlers);
+        if (System.getProperty("local") != null) {
+            logger.warn("Running in local mode");
+            context.setResourceBase("src/main/static/");
+        } else {
+            context.setBaseResource(Resource.newClassPathResource("static"));
+        }
 
-        return gzip;
+
+        DefaultServlet defaultServlet = new DefaultServlet();
+        context.addServlet(new ServletHolder(defaultServlet), "/*");
+        return context;
     }
 
 }
