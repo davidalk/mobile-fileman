@@ -25,32 +25,21 @@ public class InitialiseServer {
 
     public static void main(String... args) {
         try {
-            boolean staticContent = true;
-
-            if (args.length > 0  && args[0].equals("noStatic")) {
-                logger.info("Starting without static content handler");
-                staticContent = false;
-            } else {
-                logger.info("Starting static and servlet handlers");
-            }
-
             InitialiseServer initialiseServer = new InitialiseServer();
-            initialiseServer.startServer(staticContent);
+            initialiseServer.startServer();
         } catch (Exception e) {
             logger.error("Error starting server", e);
             throw new RuntimeException(e);
         }
     }
 
-    private void startServer(boolean staticContent) throws Exception {
+    private void startServer() throws Exception {
         Server server = new Server(8080);
 
         HandlerCollection handlerCollection = new HandlerCollection();
         handlerCollection.addHandler(getServletContextHandler(new XmlWebApplicationContext()));
 
-        if (staticContent) {
-            handlerCollection.addHandler(getStaticHandler());
-        }
+        handlerCollection.addHandler(getStaticHandler());
 
         server.setHandler(handlerCollection);
         server.start();
