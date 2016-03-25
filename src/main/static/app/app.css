@@ -40,3 +40,11 @@
 .bottom-buffer-2 {
     margin-bottom: 10px;
 }
+
+#bootstrap-overrides .btn-primary {
+    background-color: #3F51B5;
+}
+
+#bootstrap-overrides .btn-primary:hover {
+    background-color: #2f3d87;
+}
