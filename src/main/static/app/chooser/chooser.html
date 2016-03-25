@@ -4,27 +4,31 @@
 
         <md-sidenav class="md-sidenav-{{side}} md-whiteframe-4dp"
                     md-component-id="side"
-                    eval-attr-as-expr="mdComponentId">
+                    eval-attr-as-expr="mdComponentId" flex>
             <md-toolbar>
                 <h1 class="md-toolbar-tools">Choose Directory</h1>
             </md-toolbar>
-            <div>Content!!</div>
-            <md-button class="md-primary" ng-click="close()">Close</md-button>
+
+            <md-content>
+                <div>Content!!</div>
+                <md-button class="md-primary" ng-click="close()">Close</md-button>
+            </md-content>
+
         </md-sidenav>
 
         <md-content>
             <div class="input-group">
-            <span class="input-group-btn">
-                <button type="button" class="btn btn-primary" ng-click="toggle()">
-                    <span class="glyphicon glyphicon-folder-open"></span>
-                </button>
-            </span>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="toggle()">
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                    </button>
+                </span>
 
-                <input title="{{side}}"
-                       type="text"
-                       class="form-control"
-                       value="{{selectedDirectory}}"
-                       readonly>
+                    <input title="{{side}}"
+                           type="text"
+                           class="form-control"
+                           value="{{selectedDirectory}}"
+                           readonly>
             </div>
         </md-content>
 

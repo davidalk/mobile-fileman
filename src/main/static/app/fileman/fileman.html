@@ -1,19 +1,21 @@
-<div class="container-fluid">
+<div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <span class="FileManTitle col-md-12">Mobile File Manager</span>
-        </div>
+    <div layout="row">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3>Mobile File Manager</h3>
+            </div>
+        </md-toolbar>
     </div>
 
 
-    <div class="row top-buffer">
+    <div layout="row" class="top-buffer">
 
-        <div class="col-md-6">
+        <div layout="column">
             <directory-chooser side="left"></directory-chooser>
         </div>
 
-        <div class="col-md-6">
+        <div layout="column">
             <directory-chooser side="right"></directory-chooser>
         </div>
 
