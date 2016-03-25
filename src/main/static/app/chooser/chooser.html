@@ -1,30 +1,33 @@
 <div ng-cloak>
 
     <section layout="row" flex>
-        <div class="input-group">
+
+        <md-sidenav class="md-sidenav-{{side}} md-whiteframe-4dp"
+                    md-component-id="side"
+                    eval-attr-as-expr="mdComponentId">
+            <md-toolbar>
+                <h1 class="md-toolbar-tools">Choose Directory</h1>
+            </md-toolbar>
+            <div>Content!!</div>
+            <md-button class="md-primary" ng-click="close()">Close</md-button>
+        </md-sidenav>
+
+        <md-content>
+            <div class="input-group">
             <span class="input-group-btn">
                 <button type="button" class="btn btn-primary" ng-click="toggle()">
                     <span class="glyphicon glyphicon-folder-open"></span>
                 </button>
             </span>
 
-            <input title="{{side}}"
-                   type="text"
-                   class="form-control"
-                   value="{{selectedDirectory}}"
-                   readonly>
-        </div>
-        <md-sidenav class="md-sidenav-{{side}} md-whiteframe-4dp"
-                    md-component-id="side"
-                    eval-attr-as-expr="mdComponentId">
-            <md-toolbar class="md-theme-light">
-                <h1 class="md-toolbar-tools">Choose Directory</h1>
-            </md-toolbar>
-            <md-content layout-padding>
-                <div>Content!!</div>
-                <md-button class="md-primary" ng-click="close()">Close</md-button>
-            </md-content>
-        </md-sidenav>
+                <input title="{{side}}"
+                       type="text"
+                       class="form-control"
+                       value="{{selectedDirectory}}"
+                       readonly>
+            </div>
+        </md-content>
+
     </section>
 
 </div>

@@ -17,12 +17,11 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
             };
 
             function chooserLinkFunction(scope, element) {
-
                 scope.toggle = function () {
                     $mdSidenav(scope.side)
                         .toggle()
                         .then(function () {
-                            $log.debug('toggle ' + scope.side + ' is done');
+                            $log.debug('toggle ' + scope.side);
                         });
                 };
 
@@ -30,7 +29,7 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                     $mdSidenav(scope.side)
                         .close()
                         .then(function () {
-                            $log.debug('close ' + scope.side + ' is done');
+                            $log.debug('close ' + scope.side);
                         });
                 }
 
