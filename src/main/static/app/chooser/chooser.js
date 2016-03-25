@@ -3,18 +3,38 @@
 angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
 
 
+    .directive('directoryChooser', [
+        '$mdSidenav',
+        '$log',
+        function ($mdSidenav, $log) {
+            return {
+                restrict: 'E',
+                scope: {
+                    side: '@'
+                },
+                link: chooserLinkFunction,
+                templateUrl: 'chooser/chooser.html'
+            };
 
-    .directive('directoryChooser', function () {
+            function chooserLinkFunction(scope, element) {
+
+                scope.toggle = function () {
+                    $mdSidenav(scope.side)
+                        .toggle()
+                        .then(function () {
+                            $log.debug("toggle " + scope.side + " is done");
+                        });
+                }
+
+            }
+        }])
+
+    .directive('evalAttrAsExpr', function () {
         return {
-            restrict: 'E',
-            scope: {
-                side: '@'
-            },
-            link: chooserLinkFunction,
-            templateUrl: 'chooser/chooser.html'
+            restrict: 'A',
+            controller: ['$scope', '$attrs', function ($scope, $attrs) {
+                var attrToEval = $attrs.evalAttrAsExpr;
+                $attrs[attrToEval] = $scope.$eval($attrs[attrToEval]);
+            }]
         };
-
-        function chooserLinkFunction(scope, element) {
-
-        }
     });
