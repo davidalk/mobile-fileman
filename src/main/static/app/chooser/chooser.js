@@ -22,7 +22,15 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                     $mdSidenav(scope.side)
                         .toggle()
                         .then(function () {
-                            $log.debug("toggle " + scope.side + " is done");
+                            $log.debug('toggle ' + scope.side + ' is done');
+                        });
+                };
+
+                scope.close = function () {
+                    $mdSidenav(scope.side)
+                        .close()
+                        .then(function () {
+                            $log.debug('close ' + scope.side + ' is done');
                         });
                 }
 
@@ -32,9 +40,11 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
     .directive('evalAttrAsExpr', function () {
         return {
             restrict: 'A',
-            controller: ['$scope', '$attrs', function ($scope, $attrs) {
-                var attrToEval = $attrs.evalAttrAsExpr;
-                $attrs[attrToEval] = $scope.$eval($attrs[attrToEval]);
-            }]
+            controller: ['$scope', '$attrs',
+                function ($scope, $attrs) {
+                    //noinspection JSUnresolvedVariable
+                    var attrToEval = $attrs.evalAttrAsExpr;
+                    $attrs[attrToEval] = $scope.$eval($attrs[attrToEval]);
+                }]
         };
     });
