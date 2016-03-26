@@ -9,9 +9,12 @@
                 <h1 class="md-toolbar-tools">Choose Directory</h1>
             </md-toolbar>
 
-            <md-content>
+            <md-content class="top-buffer-2">
                 <ul>
-                    <li layout="row" ng-repeat="directory in directories">{{directory}}</li>
+                    <li layout="row" ng-repeat="directory in directories">
+                        <span class="glyphicon glyphicon-folder-close" layout="column" flex="10"></span>
+                        <span layout="column" flex="90">{{directory}}</span>
+                    </li>
                 </ul>
                 <div layout="row" layout-align="end">
                     <md-button class="md-raised md-primary" ng-click="close()">Close</md-button>

@@ -37,6 +37,10 @@
     margin-top: 2px;
 }
 
+.top-buffer-2 {
+    margin-top: 15px;
+}
+
 #bootstrap-overrides .input-group .btn-primary {
     background-color: #3F51B5;
     border-radius: 0px;
