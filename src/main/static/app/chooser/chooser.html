@@ -11,9 +11,11 @@
 
             <md-content>
                 <ul>
-                    <li ng-repeat="directory in directories">{{directory}}</li>
+                    <li layout="row" ng-repeat="directory in directories">{{directory}}</li>
                 </ul>
-                <md-button class="md-primary" ng-click="close()">Close</md-button>
+                <div layout="row" layout-align="end">
+                    <md-button class="md-raised md-primary" ng-click="close()">Close</md-button>
+                </div>
             </md-content>
 
         </md-sidenav>
