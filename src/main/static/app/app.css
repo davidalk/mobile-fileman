@@ -34,17 +34,18 @@
 }
 
 .top-buffer {
-    margin-top: 5px;
+    margin-top: 3px;
 }
 
-.bottom-buffer-2 {
-    margin-bottom: 10px;
-}
-
-#bootstrap-overrides .btn-primary {
+#bootstrap-overrides .input-group .btn-primary {
     background-color: #3F51B5;
+    border-radius: 0px;
 }
 
-#bootstrap-overrides .btn-primary:hover {
+#bootstrap-overrides .input-group .btn-primary:hover {
     background-color: #2f3d87;
+}
+
+#bootstrap-overrides .input-group .form-control  {
+    border-radius: 0px;
 }
