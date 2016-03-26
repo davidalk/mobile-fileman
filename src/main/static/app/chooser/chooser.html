@@ -10,7 +10,9 @@
             </md-toolbar>
 
             <md-content>
-                <div>Content!!</div>
+                <ul>
+                    <li ng-repeat="directory in directories">{{directory}}</li>
+                </ul>
                 <md-button class="md-primary" ng-click="close()">Close</md-button>
             </md-content>
 

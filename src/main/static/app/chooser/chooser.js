@@ -5,8 +5,9 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
 
     .directive('directoryChooser', [
         '$mdSidenav',
+        '$http',
         '$log',
-        function ($mdSidenav, $log) {
+        function ($mdSidenav, $http, $log) {
             return {
                 restrict: 'E',
                 scope: {
@@ -17,6 +18,24 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
             };
 
             function chooserLinkFunction(scope, element) {
+                
+                scope.directories = getDirectories();
+
+                function getDirectories(parent) {
+                    var url = '/webapp/directories/';
+                    if (parent) {
+                        url += parent.replace(/^\//, '');
+                    }
+
+                    $http.get(url)
+                        .then(function success(response) {
+                            $log.info('Directory service success');
+                            return response.data.subDirectories
+                        }, function error(response) {
+                            $log.error('Failed contacting directory service: ' + response)
+                        });
+                }
+                
                 scope.toggle = function () {
                     $mdSidenav(scope.side)
                         .toggle()
