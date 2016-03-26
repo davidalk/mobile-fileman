@@ -41,13 +41,13 @@
     margin-top: 15px;
 }
 
+.left-buffer {
+    margin-left: 5px;
+}
+
 #bootstrap-overrides .input-group .btn-primary {
     background-color: #3F51B5;
     border-radius: 0px;
-}
-
-#bootstrap-overrides .input-group .btn-primary:hover {
-    background-color: #2f3d87;
 }
 
 #bootstrap-overrides .input-group .form-control  {

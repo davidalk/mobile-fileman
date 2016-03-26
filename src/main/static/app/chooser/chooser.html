@@ -11,9 +11,11 @@
 
             <md-content class="top-buffer-2">
                 <ul>
-                    <li layout="row" ng-repeat="directory in directories">
-                        <span class="glyphicon glyphicon-folder-close" layout="column" flex="10"></span>
-                        <span layout="column" flex="90">{{directory}}</span>
+                    <li ng-repeat="directory in directories">
+                        <md-button layout="row">
+                            <span class="glyphicon glyphicon-folder-close" ></span>
+                            <span class="left-buffer">{{directory}}</span>
+                        </md-button>
                     </li>
                 </ul>
                 <div layout="row" layout-align="end">
@@ -31,11 +33,11 @@
                     </button>
                 </span>
 
-                    <input title="{{side}}"
-                           type="text"
-                           class="form-control"
-                           value="{{selectedDirectory}}"
-                           readonly>
+                <input title="{{side}}"
+                       type="text"
+                       class="form-control"
+                       value="{{selectedDirectory}}"
+                       readonly>
             </div>
         </md-content>
 
