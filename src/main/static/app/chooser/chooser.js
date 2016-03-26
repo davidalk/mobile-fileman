@@ -40,7 +40,11 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                             q.resolve(response.data.subDirectories);
                         }, function error(response) {
                             $log.error('Failed contacting directory service: ' + response);
-                            throw new Error(response);
+                            if (!parent || parent === '/') {
+                                throw new Error(response);
+                            } else {
+                                return getDirectories();
+                            }
                         });
 
                     return q.promise;

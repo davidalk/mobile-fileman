@@ -17,7 +17,7 @@
     "jquery": "~2.1.1",
     "html5-boilerplate": "~5.2.0",
     "bootstrap": "~3.3.0",
-    "angular-bootstrap": "~1.1.0"
+    "angular-bootstrap": "~1.2.x"
   },
   "resolutions": {
     "angular": "1.5.X"
