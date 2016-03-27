@@ -19,6 +19,7 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
             };
 
             function chooserLinkFunction(scope, element) {
+                var sidenavInstance = $mdSidenav(scope.side);
 
                 getDirectories().then(function (data) {
                     scope.directories = data;
@@ -50,21 +51,21 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                     return q.promise;
                 }
 
-                scope.toggle = function () {
-                    $mdSidenav(scope.side)
-                        .toggle()
+                scope.open = function () {
+                    sidenavInstance
+                        .open()
                         .then(function () {
-                            $log.debug('toggle ' + scope.side);
+                            $log.debug('open ' + scope.side);
                         });
                 };
 
                 scope.close = function () {
-                    $mdSidenav(scope.side)
+                    sidenavInstance
                         .close()
                         .then(function () {
                             $log.debug('close ' + scope.side);
                         });
-                }
+                };
 
             }
         }])

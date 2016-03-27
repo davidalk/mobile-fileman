@@ -62,9 +62,9 @@ public class InitialiseServer {
 
         if (System.getProperty("local") != null) {
             logger.warn("Running in local mode");
-            context.setResourceBase("src/main/static/");
+            context.setResourceBase("src/main/static/app/");
         } else {
-            context.setBaseResource(Resource.newClassPathResource("static"));
+            context.setBaseResource(Resource.newClassPathResource("static/app/"));
         }
 
 

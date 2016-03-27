@@ -1,10 +1,10 @@
 <div ng-cloak>
 
-    <section layout="row" flex>
+    <section layout="row">
 
         <md-sidenav class="md-sidenav-{{side}} md-whiteframe-4dp"
                     md-component-id="side"
-                    eval-attr-as-expr="mdComponentId" flex>
+                    eval-attr-as-expr="mdComponentId">
             <md-toolbar>
                 <h1 class="md-toolbar-tools">Choose Directory</h1>
             </md-toolbar>
@@ -28,7 +28,7 @@
         <md-content>
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" ng-click="toggle()">
+                    <button type="button" class="btn btn-primary" ng-click="open()">
                         <span class="glyphicon glyphicon-folder-open"></span>
                     </button>
                 </span>
