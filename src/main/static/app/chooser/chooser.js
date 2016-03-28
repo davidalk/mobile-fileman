@@ -58,6 +58,12 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                     bindDirectoriesToScope(scope.selectedDirectory)
                 };
 
+                scope.selectParentDirectory = function () {
+                    var newSelectedDir = scope.selectedDirectory.replace(/[^\/]+?\/$/, '');
+                    scope.selectedDirectory = newSelectedDir;
+                    bindDirectoriesToScope(newSelectedDir);
+                };
+
                 scope.open = function () {
                     sidenavInstance
                         .open()

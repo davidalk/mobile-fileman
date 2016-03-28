@@ -11,9 +11,16 @@
 
             <md-content class="top-buffer-2">
                 <ul>
+                    <li>
+                        <md-button layout="row" ng-click="selectParentDirectory()"
+                                   ng-if="selectedDirectory !== undefined && selectedDirectory !== '/'">
+                            <span class="glyphicon glyphicon-level-up"></span>
+                            <span class="left-buffer">..</span>
+                        </md-button>
+                    </li>
                     <li ng-repeat="directory in directories">
                         <md-button layout="row" ng-click="selectDirectory(directory)">
-                            <span class="glyphicon glyphicon-folder-close" ></span>
+                            <span class="glyphicon glyphicon-folder-close"></span>
                             <span class="left-buffer">{{directory}}</span>
                         </md-button>
                     </li>
