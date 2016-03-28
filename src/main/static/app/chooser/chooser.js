@@ -20,10 +20,15 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
             function chooserLinkFunction(scope, element) {
                 var sidenavInstance = $mdSidenav(scope.side);
 
-                getDirectories().then(function (data) {
-                    scope.directories = data;
-                });
+                scope.selectedDirectory = '/';
 
+                bindDirectoriesToScope(scope.selectedDirectory);
+
+                function bindDirectoriesToScope(root) {
+                    getDirectories(root).then(function (data) {
+                        scope.directories = data;
+                    });
+                }
 
                 function getDirectories(parent) {
                     var url = '/webapp/directories/';
@@ -47,6 +52,11 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                         });
 
                 }
+                
+                scope.selectDirectory = function (directory) {
+                    scope.selectedDirectory += directory + '/';
+                    bindDirectoriesToScope(scope.selectedDirectory)
+                };
 
                 scope.open = function () {
                     sidenavInstance
