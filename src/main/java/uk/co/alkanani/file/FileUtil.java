@@ -23,7 +23,7 @@ public class FileUtil {
 
         try (Stream<Path> fileStream = Files.list(rootPath)) {
             fileStream
-                    .filter(path -> !Files.isDirectory(path) && Files.isReadable(path) && !isHidden(path))
+                    .filter(path -> Files.isReadable(path) && !isHidden(path))
                     .map(FileUtil::fileJsonMapper)
                     .forEach(filesJson.files::add);
         } catch (IOException e) {
@@ -46,6 +46,7 @@ public class FileUtil {
         FileJson fileJson = new FileJson();
         fileJson.name = path.getFileName().toString();
         fileJson.lastModified = path.toFile().lastModified();
+        fileJson.isDirectory = Files.isDirectory(path);
         return fileJson;
     }
 }
