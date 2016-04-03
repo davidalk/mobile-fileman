@@ -2,6 +2,6 @@ package uk.co.alkanani.json;
 
 public class FileJson {
     public String name;
-    public long unixTime;
+    public long lastModified;
 
 }
