@@ -17,8 +17,7 @@ angular.module('myApp.fileman', ['ui.router'])
 
     .controller('FilemanCtrl', [
         '$log',
-        '$scope',
-        function ($log, $scope) {
+        function ($log) {
             $log.info('FilemanCtrl');
   
         }]);
