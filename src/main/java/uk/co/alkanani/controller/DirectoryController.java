@@ -19,7 +19,7 @@ public class DirectoryController {
     public void get(HttpServletResponse response) {
         try {
             logger.info("Redirecting /directories to /directories/");
-            response.sendRedirect("/webapp/directories/");
+            response.sendRedirect("/rest/directories/");
         } catch (IOException e) {
             logger.error("Redirect to /directories/ failed", e);
         }

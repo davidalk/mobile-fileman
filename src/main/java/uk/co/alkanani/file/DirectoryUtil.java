@@ -14,13 +14,13 @@ import java.util.stream.Stream;
 public class DirectoryUtil {
     private static final Logger logger = LoggerFactory.getLogger(DirectoryUtil.class);
 
-    public static SubDirectoriesJson getSubDirectories(String start) {
+    public static SubDirectoriesJson getSubDirectories(String root) {
         FileSystem fileSystem = FileSystems.getDefault();
-        Path startPath = fileSystem.getPath(start);
+        Path rootPath = fileSystem.getPath(root);
 
         SubDirectoriesJson json = new SubDirectoriesJson();
 
-        try (Stream<Path> directoryStream = Files.list(startPath)) {
+        try (Stream<Path> directoryStream = Files.list(rootPath)) {
             directoryStream
                     .filter(path -> Files.isDirectory(path) && Files.isReadable(path) && !isHidden(path))
                     .map(path -> path.toFile().getName())
