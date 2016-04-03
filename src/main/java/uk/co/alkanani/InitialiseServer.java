@@ -49,7 +49,7 @@ public class InitialiseServer {
     private ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setErrorHandler(null);
-        contextHandler.setContextPath("/webapp");
+        contextHandler.setContextPath("/rest");
         contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), "/*");
         contextHandler.addEventListener(new ContextLoaderListener(context));
         contextHandler.setResourceBase(new ClassPathResource("webapp").getURI().toString());

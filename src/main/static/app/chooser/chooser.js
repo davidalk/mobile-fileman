@@ -31,7 +31,7 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                 }
 
                 function getDirectories(parent) {
-                    var url = '/webapp/directories/';
+                    var url = '/rest/directories/';
 
                     if (parent) {
                         url += parent.replace(/^\//, '');
