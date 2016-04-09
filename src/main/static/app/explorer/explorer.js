@@ -25,7 +25,7 @@ angular.module('myApp.explorer', [])
                     .attr('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight)
                     .attr('class', scope.side + '-svg')
                     .append('g')
-                    .attr('transform', 'translate(0, 40)');
+                    .attr('transform', 'translate(15, 40)');
 
 
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
