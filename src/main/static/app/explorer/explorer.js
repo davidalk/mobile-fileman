@@ -17,13 +17,15 @@ angular.module('myApp.explorer', [])
             function explorerLinkFunction(scope, element) {
                 var url = '/rest/files';
                 var svgWidth = 1024, svgHeight = 768,
-                    tileWidth = 150, tileHeight = 150,
+                    tileWidth = 150, tileHeight = 175,
                     maxWidthForTiles = calcMaxWidthForTiles();
 
                 var svg = d3.select(element[0])
                     .append('svg')
                     .attr('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight)
-                    .append('g');
+                    .attr('class', scope.side + '-svg')
+                    .append('g')
+                    .attr('transform', 'translate(0, 40)');
 
 
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
@@ -45,16 +47,13 @@ angular.module('myApp.explorer', [])
                     var files = _.filter(data, {'isDirectory': false});
                     var directories = _.filter(data, {'isDirectory': true});
 
-                    svg.selectAll('.directories')
+                    var tiles = svg.selectAll(".directories")
                         .data(directories, function (d) {
                             return d.name;
-                        })
-                        .enter()
-                        .append('path')
-                        .attr('d', "M 118.222 24 h -62.222 v -6.222 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 h -36.444 c -5.4 0 -9.778 4.378 -9.778 9.778 v 100.445 c 0 5.4 4.378 9.77801 9.778 9.77801 h 108.445 c 5.4 0 9.77801 -4.378 9.77801 -9.778 v -84.445 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 Z")
-                        .attr('stroke', 'black')
-                        .attr('fill', 'dodgerblue')
-                        .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"})
+                        });
+
+                    var g = tiles.enter().append('g')
+                        .attr('class', 'directories')
                         .attr('transform', function (d, i) {
                             var x, y, oneDimPos;
 
@@ -70,7 +69,21 @@ angular.module('myApp.explorer', [])
                             }
 
                             return 'translate(' + x + ',' + y + ')';
+                        });
+
+                    g.append('path')
+                        .attr('d', "M 118.222 24 h -62.222 v -6.222 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 h -36.444 c -5.4 0 -9.778 4.378 -9.778 9.778 v 100.445 c 0 5.4 4.378 9.77801 9.778 9.77801 h 108.445 c 5.4 0 9.77801 -4.378 9.77801 -9.778 v -84.445 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 Z")
+                        .attr('stroke', 'black')
+                        .attr('fill', 'dodgerblue')
+                        .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
+
+                    g.append('text')
+                        .text(function (d) {
+                            return d.name;
                         })
+                        .attr('font-size', '20');
+
+                    tiles.exit().remove();
 
                 }
 
