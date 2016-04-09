@@ -15,7 +15,9 @@
     "angular-material": "1.0.x",
     "html5-boilerplate": "~5.2.0",
     "bootstrap": "~3.3.0",
-    "angular-bootstrap": "1.2.x"
+    "angular-bootstrap": "1.2.x",
+    "d3": "3.5.x",
+    "lodash": "4.9.x"
   },
   "resolutions": {
     "angular": "1.5.X"

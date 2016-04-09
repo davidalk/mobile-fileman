@@ -5,9 +5,10 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
 
     .directive('directoryChooser', [
         '$mdSidenav',
-        '$http',
         '$log',
-        function ($mdSidenav, $http, $log) {
+        '$http',
+        '$rootScope',
+        function ($mdSidenav, $log, $http, $rootScope) {
             return {
                 restrict: 'E',
                 scope: {
@@ -23,6 +24,7 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                 scope.selectedDirectory = '/';
 
                 bindDirectoriesToScope(scope.selectedDirectory);
+                broadcastSelectedDirectory();
 
                 function bindDirectoriesToScope(root) {
                     getDirectories(root).then(function (data) {
@@ -52,16 +54,22 @@ angular.module('myApp.chooser', ['ui.bootstrap', 'ngMaterial'])
                         });
 
                 }
+
+                function broadcastSelectedDirectory() {
+                    $rootScope.$broadcast('chooser:updateDirectory', scope.side, scope.selectedDirectory);
+                }
                 
                 scope.selectDirectory = function (directory) {
                     scope.selectedDirectory += directory + '/';
                     bindDirectoriesToScope(scope.selectedDirectory)
+                    broadcastSelectedDirectory();
                 };
 
                 scope.selectParentDirectory = function () {
                     var newSelectedDir = scope.selectedDirectory.replace(/[^\/]+?\/$/, '');
                     scope.selectedDirectory = newSelectedDir;
                     bindDirectoriesToScope(newSelectedDir);
+                    broadcastSelectedDirectory();
                 };
 
                 scope.open = function () {

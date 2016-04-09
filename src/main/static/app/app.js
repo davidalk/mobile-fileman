@@ -4,6 +4,7 @@
 angular.module('myApp', [
     'myApp.fileman',
     'myApp.chooser',
+    'myApp.explorer',
     'ui.router',
     'myApp.version'
 ]).config(['$urlRouterProvider', function ($urlRouterProvider) {
