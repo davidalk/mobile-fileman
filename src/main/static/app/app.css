@@ -41,12 +41,8 @@
     margin-top: 15px;
 }
 
-.left-buffer {
+.chooser-button-text {
     margin-left: 5px;
-}
-
-.folder-icon {
-    padding-bottom: 7px;
 }
 
 #bootstrap-overrides .input-group .btn-primary {
