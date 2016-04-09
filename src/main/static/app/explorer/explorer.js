@@ -16,7 +16,10 @@ angular.module('myApp.explorer', [])
 
             function explorerLinkFunction(scope, element) {
                 var url = '/rest/files';
-                var svgWidth = 1024, svgHeight = 768;
+                var svgWidth = 1024, svgHeight = 768,
+                    tileWidth = 150, tileHeight = 150,
+                    maxWidthForTiles = calcMaxWidthForTiles();
+
                 var svg = d3.select(element[0])
                     .append('svg')
                     .attr('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight)
@@ -53,13 +56,14 @@ angular.module('myApp.explorer', [])
                         .attr('fill', 'dodgerblue')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"})
                         .attr('transform', function (d, i) {
-                            var x, y, oneDimPos, graphicWidth = 150, graphicHeight = 150;
+                            var x, y, oneDimPos;
 
-                            oneDimPos = i * graphicWidth;
+                            maxWidthForTiles = calcMaxWidthForTiles();
+                            oneDimPos = i * tileWidth;
 
-                            if (oneDimPos > svgWidth) {
-                                x = oneDimPos % svgWidth;
-                                y = Number.parseInt((oneDimPos / svgWidth)) * graphicHeight;
+                            if ((oneDimPos + tileWidth) > maxWidthForTiles) {
+                                x = oneDimPos % maxWidthForTiles;
+                                y = Number.parseInt((oneDimPos / maxWidthForTiles)) * tileHeight;
                             } else {
                                 x = oneDimPos;
                                 y = 0;
@@ -67,6 +71,15 @@ angular.module('myApp.explorer', [])
 
                             return 'translate(' + x + ',' + y + ')';
                         })
+
+                }
+
+                function calcMaxWidthForTiles() {
+                    var maxTilesHorizontal;
+
+                    maxTilesHorizontal = Number.parseInt(svgWidth / tileWidth);
+
+                    return maxTilesHorizontal * tileWidth;
 
                 }
 
