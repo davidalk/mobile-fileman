@@ -56,9 +56,8 @@
 
 .VerticalTitle {
     color: white;
-    width: 1em;
     text-align: center;
-    /*word-wrap: break-word;*/
+    width: 1em;
 }
 
 .TitleBackground {
