@@ -1,34 +1,26 @@
-<div id="bootstrap-overrides">
+<div id="bootstrap-overrides" layout="row">
 
-    <div layout="row">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h3>Mobile File Manager</h3>
-            </div>
-        </md-toolbar>
-    </div>
-
-
-    <div layout="row" class="top-buffer">
-
-        <div layout="column">
+    <div layout="column">
+        <div layout="row">
             <directory-chooser side="left"></directory-chooser>
         </div>
-
-        <div layout="column">
-            <directory-chooser side="right"></directory-chooser>
-        </div>
-
-    </div>
-
-    <div layout="row">
-        <div layout="column" flex="50">
+        <div layout="column" >
             <explorer side="left"></explorer>
         </div>
+    </div>
 
-        <div layout="column" flex="50">
+    <div layout="column" class="TitleBackground">
+        <h3 class="VerticalTitle">M</br>o</br>b</br>i</br>l</br>e</br>
+            </br>F</br>i</br>l</br>e</br>
+            </br>M</br>a</br>n</br>a</br>g</br>e</br>r</h3>
+    </div>
+
+    <div layout="column">
+        <div layout="row">
+            <directory-chooser side="right"></directory-chooser>
+        </div>
+        <div layout="column">
             <explorer side="right"></explorer>
         </div>
     </div>
-
 </div>

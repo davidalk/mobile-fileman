@@ -53,3 +53,14 @@
 #bootstrap-overrides .input-group .form-control  {
     border-radius: 0px;
 }
+
+.VerticalTitle {
+    color: white;
+    width: 1em;
+    text-align: center;
+    /*word-wrap: break-word;*/
+}
+
+.TitleBackground {
+    background-color: #3F51B5;
+}
