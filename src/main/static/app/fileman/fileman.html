@@ -1,6 +1,6 @@
-<div id="bootstrap-overrides">
+<div id="bootstrap-overrides" layout="column">
 
-    <div layout="row" hide-xs>
+    <div layout="row" hide-xs show-gt-xs flex="grow">
 
         <div layout="column" flex="auto" layout-xs="row">
             <div layout="row">
@@ -26,8 +26,8 @@
         </div>
     </div>
 
-    <div  layout="row" flex="auto" show-xs>
-        <div layout="column">
+    <div  layout="row" show-xs hide-gt-xs flex="grow">
+        <div layout="column" flex="auto">
             <div layout="row">
                 <directory-chooser side="left"></directory-chooser>
             </div>
@@ -41,7 +41,7 @@
                 <explorer side="right"></explorer>
             </div>
         </div>
-        <div layout="column" class="TitleBackground" fex="none">
+        <div layout="column" class="TitleBackground" flex="none">
             <h3 class="VerticalTitle">M</br>o</br>b</br>i</br>l</br>e</br>
                 </br>F</br>i</br>l</br>m</br>a</br>n</h3>
         </div>
