@@ -1,50 +1,43 @@
 <div id="bootstrap-overrides" layout="column">
 
-    <div layout="row" hide-xs show-gt-xs flex="grow">
+    <div layout="row" flex="grow">
 
-        <div layout="column" flex="auto" layout-xs="row">
-            <div layout="row">
-                <directory-chooser side="left"></directory-chooser>
+        <div layout-xs="column" layout-gt-xs="row">
+
+            <div layout="column" flex="auto" >
+                <div layout="row">
+                    <directory-chooser side="left"></directory-chooser>
+                </div>
+
+                <div layout="column">
+                    <explorer side="left"></explorer>
+                </div>
             </div>
-            <div layout="column" layout-xs="row">
-                <explorer side="left"></explorer>
+
+            <div layout="column" class="TitleBackground" flex="none" show-gt-xs hide-xs>
+                <h3 class="VerticalTitle">M</br>o</br>b</br>i</br>l</br>e</br>
+                    </br>F</br>i</br>l</br>e</br>m</br>a</br>n</h3>
             </div>
+
+            <div layout="column" flex="auto">
+                <div layout="row" style="margin-left: 2px;">
+                    <directory-chooser side="right"></directory-chooser>
+                </div>
+                <div layout="column">
+                    <explorer side="right"></explorer>
+                </div>
+            </div>
+
         </div>
 
-        <div layout="column" class="TitleBackground" flex="none" >
+
+        <div layout="column" class="TitleBackground" flex="none" show-xs hide-gt-xs>
             <h3 class="VerticalTitle">M</br>o</br>b</br>i</br>l</br>e</br>
                 </br>F</br>i</br>l</br>e</br>m</br>a</br>n</h3>
         </div>
 
-        <div layout="column" flex="auto" layout-xs="row">
-            <div layout="row" style="margin-left: 2px;">
-                <directory-chooser side="right"></directory-chooser>
-            </div>
-            <div layout="column" >
-                <explorer side="right"></explorer>
-            </div>
-        </div>
     </div>
 
-    <div  layout="row" show-xs hide-gt-xs flex="grow">
-        <div layout="column" flex="auto">
-            <div layout="row">
-                <directory-chooser side="left"></directory-chooser>
-            </div>
-            <div layout="column">
-                <explorer side="left"></explorer>
-            </div>
-            <div layout="row">
-                <directory-chooser side="right"></directory-chooser>
-            </div>
-            <div layout="column">
-                <explorer side="right"></explorer>
-            </div>
-        </div>
-        <div layout="column" class="TitleBackground" flex="none">
-            <h3 class="VerticalTitle">M</br>o</br>b</br>i</br>l</br>e</br>
-                </br>F</br>i</br>l</br>e</br>m</br>a</br>n</h3>
-        </div>
-    </div>
+
 </div>
 
