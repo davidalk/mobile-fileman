@@ -64,3 +64,9 @@
 .TitleBackground {
     background-color: #3F51B5;
 }
+
+@media (min-width: 601px) {
+    .ChooserMargin {
+        margin-left: 1px;
+    }
+}
