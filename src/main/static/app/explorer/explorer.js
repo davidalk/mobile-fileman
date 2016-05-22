@@ -9,7 +9,8 @@ angular.module('myApp.explorer', [])
             return {
                 restrict: 'E',
                 scope: {
-                    side: '@'
+                    side: '@',
+                    textLength: '@'
                 },
                 link: explorerLinkFunction
             };
@@ -78,10 +79,11 @@ angular.module('myApp.explorer', [])
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
                     g.append('text')
-                        .text(function (d) {
-                            return d.name;
-                        })
-                        .attr('font-size', '20');
+                        .attr('x', '0')
+                        .attr('y', '-2.4em')
+                        .html(function (d) {
+                            return splitText(d.name);
+                        });
 
                     tiles.exit().remove();
 
@@ -94,6 +96,37 @@ angular.module('myApp.explorer', [])
 
                     return maxTilesHorizontal * tileWidth;
 
+                }
+
+                function splitText(text) {
+                    var words, i, j, newWord, result = [],
+                        textLength = parseInt(scope.textLength);
+
+                    if (text.length > textLength) {
+                        words = text.split(' ');
+                        for (i = 0; i < words.length; i++) {
+                            if (words[i] > textLength) {
+                                newWord = '';
+                                for (j = 0; j < words[i].length; j += textLength) {
+                                    result.push(getTspanLeft());
+                                    result.push(words[i].substr(j, textLength));
+                                    result.push('</tspan>');
+                                }
+                            } else {
+                                result.push(getTspanLeft());
+                                result.push(words[i]);
+                                result.push('</tspan>');
+                            }
+                        }
+
+                        return result.join('');
+                    }
+
+                    return getTspanLeft() + text + '</tspan>';
+
+                    function getTspanLeft() {
+                        return '<tspan x="0" dy="1.2em">';
+                    }
                 }
 
             }
