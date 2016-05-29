@@ -103,9 +103,9 @@ angular.module('myApp.explorer', [])
                         textLength = parseInt(scope.textLength);
 
                     if (text.length > textLength) {
-                        words = text.split(' ');
+                        words = splitByDelim(text);
                         for (i = 0; i < words.length; i++) {
-                            if (words[i] > textLength) {
+                            if (words[i].length > textLength) {
                                 newWord = '';
                                 for (j = 0; j < words[i].length; j += textLength) {
                                     result.push(getTspanLeft());
@@ -126,6 +126,18 @@ angular.module('myApp.explorer', [])
 
                     function getTspanLeft() {
                         return '<tspan x="0" dy="1.2em">';
+                    }
+
+                    function splitByDelim(input) {
+                        var delimiters = [' ', '-', '.'];
+                        for (var i=0; i<delimiters.length; i++) {
+                           if (input.includes(delimiters[i])) {
+                               return _.map(input.split(delimiters[i]), function (d) {
+                                   return d + delimiters[i];
+                               });
+                           }
+                        }
+                        return [input];
                     }
                 }
 
