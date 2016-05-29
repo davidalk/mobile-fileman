@@ -26,7 +26,7 @@ angular.module('myApp.explorer', [])
                     .attr('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight)
                     .attr('class', scope.side + '-svg')
                     .append('g')
-                    .attr('transform', 'translate(72, 40)');
+                    .attr('transform', 'translate(72, 80)');
 
 
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
@@ -63,7 +63,7 @@ angular.module('myApp.explorer', [])
 
                             if ((oneDimPos + tileWidth) > maxWidthForTiles) {
                                 x = oneDimPos % maxWidthForTiles;
-                                y = Number.parseInt((oneDimPos / maxWidthForTiles)) * tileHeight;
+                                y = Number.parseInt((oneDimPos / maxWidthForTiles)) * tileHeight * 1.3;
                             } else {
                                 x = oneDimPos;
                                 y = 0;
@@ -80,7 +80,7 @@ angular.module('myApp.explorer', [])
 
                     g.append('text')
                         .attr('x', '0')
-                        .attr('y', '-2.4em')
+                        .attr('y', '-3.6em')
                         .html(function (d) {
                             return splitText(d.name);
                         });
