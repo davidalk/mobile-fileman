@@ -23,6 +23,7 @@ angular.module('myApp.explorer', [])
 
                 var directorySvgPath = 'M 118.222 24 h -62.222 v -6.222 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 h -36.444 c -5.4 0 -9.778 4.378 -9.778 9.778 v 100.445 c 0 5.4 4.378 9.77801 9.778 9.77801 h 108.445 c 5.4 0 9.77801 -4.378 9.77801 -9.778 v -84.445 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 Z';
                 var fileSvgPath = 'M17.778 0c-5.4 0-9.778 4.378-9.778 9.778v108.445c0 5.4 4.378 9.778 9.778 9.778h84.445c5.4 0 9.778-4.378 9.778-9.778v-86.222h-22.222c-5.4 0-9.778-4.378-9.778-9.778v-22.222h-62.222z';
+                var fileCornerSvgPath = 'M88 0v24h24z';
 
                 var svg = d3.select(element[0])
                     .append('svg')
@@ -30,6 +31,12 @@ angular.module('myApp.explorer', [])
                     .attr('class', scope.side + '-svg')
                     .append('g')
                     .attr('transform', 'translate(72, 80)');
+
+                var directoriesOuterG = svg.append('g')
+                    .attr('class', 'directories');
+
+                var filesOuterG = svg.append('g')
+                    .attr('class', 'files');
 
 
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
@@ -51,22 +58,23 @@ angular.module('myApp.explorer', [])
                     var files = _.filter(data, {'isDirectory': false});
                     var directories = _.filter(data, {'isDirectory': true});
 
-                    var directoryTiles = svg.selectAll(".directories")
+
+                    var directoryTiles = directoriesOuterG.selectAll('.directory')
                         .data(directories, function (d) {
                             return d.name;
                         });
 
-                    var g = directoryTiles.enter().append('g')
-                        .attr('class', 'directories')
+                    var directoryG = directoryTiles.enter().append('g')
+                        .attr('class', 'directory')
                         .attr('transform', gTranslate);
 
-                    g.append('path')
+                    directoryG.append('path')
                         .attr('d', directorySvgPath)
                         .attr('stroke', 'black')
                         .attr('fill', 'dodgerblue')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
-                    g.append('text')
+                    directoryG.append('text')
                         .attr('x', '0')
                         .attr('y', textDeltaY)
                         .html(function (d) {
@@ -75,6 +83,32 @@ angular.module('myApp.explorer', [])
 
                     directoryTiles.exit().remove();
 
+                    var fileTiles = filesOuterG.selectAll('.files')
+                        .data(files, function (d) {
+                            return d.name;
+                        });
+
+                    var fileG = fileTiles.enter().append('g')
+                        .attr('class', 'file')
+                        .attr('transform', gTranslate)
+                        .attr('stroke', 'black')
+                        .attr('fill', 'red')
+                        .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
+
+                    fileG.append('path')
+                        .attr('d', fileSvgPath);
+
+                    fileG.append('path')
+                        .attr('d', fileCornerSvgPath);
+
+                    fileG.append('text')
+                        .attr('x', '0')
+                        .attr('y', textDeltaY)
+                        .html(function (d) {
+                            return generateTspans(d.name);
+                        });
+
+                    fileTiles.exit().remove();
                 }
 
                 function gTranslate(d, i) {
