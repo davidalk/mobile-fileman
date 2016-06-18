@@ -68,7 +68,7 @@ angular.module('myApp.explorer', [])
                     directoryG.append('path')
                         .attr('d', directorySvgPath)
                         .attr('stroke', 'black')
-                        .attr('fill', 'dodgerblue')
+                        .attr('fill', '#98C7ED')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
                     directoryG.append('text')
@@ -80,7 +80,7 @@ angular.module('myApp.explorer', [])
 
                     directoryTiles.exit().remove();
 
-                    var fileTiles = svg.selectAll('.files')
+                    var fileTiles = svg.selectAll('.file')
                         .data(files, function (d) {
                             return d.name;
                         });
@@ -89,16 +89,19 @@ angular.module('myApp.explorer', [])
                         .attr('class', 'file')
                         .attr('transform', function (d, i) {
                             return gTranslate(i + iconCount);
-                        })
+                        });
+
+                    fileG.append('path')
+                        .attr('d', fileSvgPath)
                         .attr('stroke', 'black')
-                        .attr('fill', 'red')
+                        .attr('fill', '#EAED98')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
                     fileG.append('path')
-                        .attr('d', fileSvgPath);
-
-                    fileG.append('path')
-                        .attr('d', fileCornerSvgPath);
+                        .attr('d', fileCornerSvgPath)
+                        .attr('stroke', 'black')
+                        .attr('fill', '#B3B57F')
+                        .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
                     fileG.append('text')
                         .attr('x', '0')
@@ -131,7 +134,10 @@ angular.module('myApp.explorer', [])
                     var name = d.name;
                     if (name.length > labelLength) {
                         var words = splitByDelim(name);
-                        var lineCount = words.length === 1 ? Math.ceil(name.length / labelLength) : words.length;
+                        var lineCount = 0;
+                        words.forEach(function (w) {
+                            lineCount += Math.ceil(w.length / labelLength)
+                        });
                         return '-' + (lineCount * 1.2) + 'em';
 
                     } else {
