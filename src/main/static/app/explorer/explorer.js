@@ -63,7 +63,7 @@ angular.module('myApp.explorer', [])
 
                             if ((oneDimPos + tileWidth) > maxWidthForTiles) {
                                 x = oneDimPos % maxWidthForTiles;
-                                y = Number.parseInt((oneDimPos / maxWidthForTiles)) * tileHeight * 1.3;
+                                y = Number.parseInt((oneDimPos / maxWidthForTiles)) * tileHeight * 1.2;
                             } else {
                                 x = oneDimPos;
                                 y = 0;
@@ -80,7 +80,16 @@ angular.module('myApp.explorer', [])
 
                     g.append('text')
                         .attr('x', '0')
-                        .attr('y', '-3.6em')
+                        .attr('y', function (d) {
+                            var name = d.name;
+                            if (name.length > parseInt(scope.textLength)) {
+                                var words = splitByDelim(name);
+                                return '-' + (words.length * 1.2) + 'em';
+
+                            } else {
+                                return '-1.2em';
+                            }
+                        })
                         .html(function (d) {
                             return splitText(d.name);
                         });
@@ -127,18 +136,18 @@ angular.module('myApp.explorer', [])
                     function getTspanLeft() {
                         return '<tspan x="0" dy="1.2em">';
                     }
+                }
 
-                    function splitByDelim(input) {
-                        var delimiters = [' ', '-', '.'];
-                        for (var i=0; i<delimiters.length; i++) {
-                           if (input.includes(delimiters[i])) {
-                               return _.map(input.split(delimiters[i]), function (d, index, col) {
-                                   return d + ((index < col.length - 1) ? delimiters[i] : '');
-                               });
-                           }
+                function splitByDelim(input) {
+                    var delimiters = [' ', '-', '.'];
+                    for (var i=0; i<delimiters.length; i++) {
+                        if (input.includes(delimiters[i])) {
+                            return _.map(input.split(delimiters[i]), function (d, index, collection) {
+                                return d + ((index < collection.length - 1) ? delimiters[i] : '');
+                            });
                         }
-                        return [input];
                     }
+                    return [input];
                 }
 
             }
