@@ -10,7 +10,7 @@ angular.module('myApp.explorer', [])
                 restrict: 'E',
                 scope: {
                     side: '@',
-                    textLength: '@'
+                    labelLength: '@'
                 },
                 link: explorerLinkFunction
             };
@@ -19,7 +19,7 @@ angular.module('myApp.explorer', [])
                 var url = '/rest/files';
                 var svgWidth = 1024, svgHeight = 768,
                     tileWidth = 150, tileHeight = 175,
-                    maxWidthForTiles = calcMaxWidthForTiles();
+                    labelLength = parseInt(scope.labelLength), maxWidthForTiles = calcMaxWidthForTiles();
 
                 var svg = d3.select(element[0])
                     .append('svg')
@@ -82,9 +82,10 @@ angular.module('myApp.explorer', [])
                         .attr('x', '0')
                         .attr('y', function (d) {
                             var name = d.name;
-                            if (name.length > parseInt(scope.textLength)) {
+                            if (name.length > labelLength) {
                                 var words = splitByDelim(name);
-                                return '-' + (words.length * 1.2) + 'em';
+                                var lineCount = words.length === 1 ? Math.ceil(name.length / labelLength) : words.length;
+                                return '-' + (lineCount * 1.2) + 'em';
 
                             } else {
                                 return '-1.2em';
@@ -109,7 +110,7 @@ angular.module('myApp.explorer', [])
 
                 function splitText(text) {
                     var words, i, j, newWord, result = [],
-                        textLength = parseInt(scope.textLength);
+                        textLength = labelLength;
 
                     if (text.length > textLength) {
                         words = splitByDelim(text);
