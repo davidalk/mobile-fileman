@@ -132,8 +132,8 @@ angular.module('myApp.explorer', [])
                         var delimiters = [' ', '-', '.'];
                         for (var i=0; i<delimiters.length; i++) {
                            if (input.includes(delimiters[i])) {
-                               return _.map(input.split(delimiters[i]), function (d) {
-                                   return d + delimiters[i];
+                               return _.map(input.split(delimiters[i]), function (d, index, col) {
+                                   return d + ((index < col.length - 1) ? delimiters[i] : '');
                                });
                            }
                         }
