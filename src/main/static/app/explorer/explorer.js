@@ -32,13 +32,6 @@ angular.module('myApp.explorer', [])
                     .append('g')
                     .attr('transform', 'translate(72, 80)');
 
-                var directoriesOuterG = svg.append('g')
-                    .attr('class', 'directories');
-
-                var filesOuterG = svg.append('g')
-                    .attr('class', 'files');
-
-
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
                     if (side === scope.side) {
                         listDirectory(directory);
@@ -57,16 +50,20 @@ angular.module('myApp.explorer', [])
                 function d3DataJoin(data) {
                     var files = _.filter(data, {'isDirectory': false});
                     var directories = _.filter(data, {'isDirectory': true});
+                    var iconCount = 0;
 
 
-                    var directoryTiles = directoriesOuterG.selectAll('.directory')
+                    var directoryTiles = svg.selectAll('.directory')
                         .data(directories, function (d) {
                             return d.name;
                         });
 
                     var directoryG = directoryTiles.enter().append('g')
                         .attr('class', 'directory')
-                        .attr('transform', gTranslate);
+                        .attr('transform', function (d, i) {
+                            iconCount++;
+                            return gTranslate(i);
+                        });
 
                     directoryG.append('path')
                         .attr('d', directorySvgPath)
@@ -83,14 +80,16 @@ angular.module('myApp.explorer', [])
 
                     directoryTiles.exit().remove();
 
-                    var fileTiles = filesOuterG.selectAll('.files')
+                    var fileTiles = svg.selectAll('.files')
                         .data(files, function (d) {
                             return d.name;
                         });
 
                     var fileG = fileTiles.enter().append('g')
                         .attr('class', 'file')
-                        .attr('transform', gTranslate)
+                        .attr('transform', function (d, i) {
+                            return gTranslate(i + iconCount);
+                        })
                         .attr('stroke', 'black')
                         .attr('fill', 'red')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
@@ -111,7 +110,7 @@ angular.module('myApp.explorer', [])
                     fileTiles.exit().remove();
                 }
 
-                function gTranslate(d, i) {
+                function gTranslate(i) {
                     var x, y, oneDimPos;
 
                     maxWidthForTiles = calcMaxWidthForTiles();
