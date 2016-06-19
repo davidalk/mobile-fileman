@@ -72,7 +72,9 @@ angular.module('myApp.explorer', [])
 
                     directoryG.append('text')
                         .attr('x', '0')
-                        .attr('y', textDeltaY)
+                        .attr('y', function (d) {
+                            return textY(d);
+                        })
                         .html(function (d) {
                             return generateTspans(d.name);
                         });
@@ -102,7 +104,9 @@ angular.module('myApp.explorer', [])
 
                     fileG.append('text')
                         .attr('x', '0')
-                        .attr('y', textDeltaY)
+                        .attr('y', function (d) {
+                            return textY(d, 0.5);
+                        })
                         .html(function (d) {
                             return generateTspans(d.name);
                         });
@@ -127,18 +131,20 @@ angular.module('myApp.explorer', [])
                     return 'translate(' + x + ',' + y + ')';
                 }
 
-                function textDeltaY(d) {
+                function textY(d, offset) {
                     var name = d.name;
+                    offset = offset ? offset : 0;
+
                     if (name.length > labelLength) {
                         var words = splitByDelim(name);
                         var lineCount = 0;
                         words.forEach(function (w) {
                             lineCount += Math.ceil(w.length / labelLength)
                         });
-                        return '-' + (lineCount * 1.2) + 'em';
+                        return '-' + (lineCount * 1.2 + offset) + 'em';
 
                     } else {
-                        return '-1.2em';
+                        return '-' + (1.2 + offset) + 'em';
                     }
                 }
 
