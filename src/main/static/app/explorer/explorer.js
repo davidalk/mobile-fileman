@@ -108,7 +108,7 @@ angular.module('myApp.explorer', [])
                             return textY(d, 0.5);
                         })
                         .html(function (d) {
-                            return generateTspans(d.name, 0.5);
+                            return generateTspans(d.name, 0.6);
                         });
 
                     fileTiles.exit().remove();
