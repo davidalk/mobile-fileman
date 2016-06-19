@@ -67,7 +67,6 @@ angular.module('myApp.explorer', [])
 
                     directoryG.append('path')
                         .attr('d', directorySvgPath)
-                        .attr('stroke', 'black')
                         .attr('fill', '#98C7ED')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
@@ -93,13 +92,11 @@ angular.module('myApp.explorer', [])
 
                     fileG.append('path')
                         .attr('d', fileSvgPath)
-                        .attr('stroke', 'black')
                         .attr('fill', '#EAED98')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
                     fileG.append('path')
                         .attr('d', fileCornerSvgPath)
-                        .attr('stroke', 'black')
                         .attr('fill', '#B3B57F')
                         .style({"vector-effect": "non-scaling-stroke", "stroke-width": "1px"});
 
@@ -155,17 +152,16 @@ angular.module('myApp.explorer', [])
                 }
 
                 function generateTspans(text) {
-                    var words, i, j, newWord, result = [],
-                        textLength = labelLength;
+                    var words, i, j, newWord, result = [];
 
-                    if (text.length > textLength) {
+                    if (text.length > labelLength) {
                         words = splitByDelim(text);
                         for (i = 0; i < words.length; i++) {
-                            if (words[i].length > textLength) {
+                            if (words[i].length > labelLength) {
                                 newWord = '';
-                                for (j = 0; j < words[i].length; j += textLength) {
+                                for (j = 0; j < words[i].length; j += labelLength) {
                                     result.push(getTspanLeft());
-                                    result.push(words[i].substr(j, textLength));
+                                    result.push(words[i].substr(j, labelLength));
                                     result.push('</tspan>');
                                 }
                             } else {
@@ -188,7 +184,7 @@ angular.module('myApp.explorer', [])
                 function splitByDelim(input) {
                     var delimiters = [' ', '-', '.'];
                     for (var i = 0; i < delimiters.length; i++) {
-                        if (input.includes(delimiters[i])) {
+                        if (input.slice(0, labelLength).includes(delimiters[i])) {
                             return _.map(input.split(delimiters[i]), function (d, index, collection) {
                                 return d + ((index < collection.length - 1) ? delimiters[i] : '');
                             });
@@ -196,7 +192,6 @@ angular.module('myApp.explorer', [])
                     }
                     return [input];
                 }
-
 
             }
 
