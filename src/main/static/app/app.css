@@ -65,6 +65,11 @@
     background-color: #3F51B5;
 }
 
+span.glyphicon {
+    position: static;
+    top: 0px;
+}
+
 @media (min-width: 601px) {
     .ChooserMargin {
         margin-left: 1px;
