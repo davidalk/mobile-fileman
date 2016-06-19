@@ -108,7 +108,7 @@ angular.module('myApp.explorer', [])
                             return textY(d, 0.5);
                         })
                         .html(function (d) {
-                            return generateTspans(d.name);
+                            return generateTspans(d.name, 0.5);
                         });
 
                     fileTiles.exit().remove();
@@ -157,8 +157,9 @@ angular.module('myApp.explorer', [])
 
                 }
 
-                function generateTspans(text) {
+                function generateTspans(text, xOffset) {
                     var words, i, j, newWord, result = [];
+                    xOffset = xOffset ? xOffset : 0;
 
                     if (text.length > labelLength) {
                         words = splitByDelim(text);
@@ -183,7 +184,7 @@ angular.module('myApp.explorer', [])
                     return getTspanLeft() + text + '</tspan>';
 
                     function getTspanLeft() {
-                        return '<tspan x="0" dy="1.2em">';
+                        return '<tspan x="' + xOffset + 'em" dy="1.2em">';
                     }
                 }
 
