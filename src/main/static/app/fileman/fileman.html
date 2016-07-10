@@ -4,13 +4,13 @@
 
         <div layout-xs="column" layout-gt-xs="row">
 
-            <div layout="column" flex="auto" >
+            <div layout="column" flex="auto">
                 <div layout="row">
                     <directory-chooser side="left"></directory-chooser>
                 </div>
 
-                <div layout="column">
-                    <explorer side="left" label-length="14"></explorer>
+                <div layout="column" >
+                    <explorer side="left" label-length="14" style="overflow: auto"></explorer>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                 <div layout="row" class="ChooserMargin">
                     <directory-chooser side="right"></directory-chooser>
                 </div>
-                <div layout="column">
+                <div layout="column" style="overflow: auto">
                     <explorer side="right" label-length="14"></explorer>
                 </div>
             </div>

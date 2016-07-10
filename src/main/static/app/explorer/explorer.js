@@ -5,7 +5,8 @@ angular.module('myApp.explorer', [])
     .directive('explorer', [
         '$http',
         '$log',
-        function ($http, $log) {
+        '$timeout',
+        function ($http, $log, $timeout) {
             return {
                 restrict: 'E',
                 scope: {
@@ -28,6 +29,7 @@ angular.module('myApp.explorer', [])
                 var svg = d3.select(element[0])
                     .append('svg')
                     .attr('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight)
+                    .attr('preserveAspectRatio', 'xMinYMin')
                     .attr('class', scope.side + '-svg')
                     .append('g')
                     .attr('transform', 'translate(72, 80)');
@@ -112,6 +114,13 @@ angular.module('myApp.explorer', [])
                         });
 
                     fileTiles.exit().remove();
+
+                    $timeout(setSvgDimensions);
+                }
+
+                function setSvgDimensions() {
+                    var svg = d3.select(element[0]).select('svg');
+                    svg.attr('height', '600').attr('width', '356');
                 }
 
                 function gTranslate(i) {
