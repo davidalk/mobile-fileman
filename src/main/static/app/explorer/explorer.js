@@ -18,7 +18,7 @@ angular.module('myApp.explorer', [])
 
             function explorerLinkFunction(scope, element) {
                 var url = '/rest/files';
-                var svgWidth = 1024, svgHeight = 768,
+                var svgWidth = 1024, svgHeight = {},
                     tileWidth = 150, tileHeight = 175,
                     labelLength = parseInt(scope.labelLength), maxWidthForTiles = calcMaxWidthForTiles();
 
@@ -28,11 +28,9 @@ angular.module('myApp.explorer', [])
 
                 var svg = d3.select(element[0])
                     .append('svg')
-                    .attr('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight)
-                    .attr('preserveAspectRatio', 'xMinYMin')
                     .attr('class', scope.side + '-svg')
                     .append('g')
-                    .attr('transform', 'translate(72, 80)');
+                    .attr('transform', 'translate(10, 30) scale(0.38, 0.38)');
 
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
                     if (side === scope.side) {
@@ -53,6 +51,7 @@ angular.module('myApp.explorer', [])
                     var files = _.filter(data, {'isDirectory': false});
                     var directories = _.filter(data, {'isDirectory': true});
                     var iconCount = 0;
+                    svgHeight[scope.side] = 0;
 
 
                     var directoryTiles = svg.selectAll('.directory')
@@ -119,8 +118,9 @@ angular.module('myApp.explorer', [])
                 }
 
                 function setSvgDimensions() {
+
                     var svg = d3.select(element[0]).select('svg');
-                    svg.attr('height', '600').attr('width', '356');
+                    svg.attr('height', (svgHeight[scope.side] + 250) * 0.38).attr('width', '100%');
                 }
 
                 function gTranslate(i) {
@@ -132,6 +132,7 @@ angular.module('myApp.explorer', [])
                     if ((oneDimPos + tileWidth) > maxWidthForTiles) {
                         x = oneDimPos % maxWidthForTiles;
                         y = Number.parseInt((oneDimPos / maxWidthForTiles)) * tileHeight * 1.2;
+                        svgHeight[scope.side] = y > svgHeight[scope.side] ? y : svgHeight[scope.side]
                     } else {
                         x = oneDimPos;
                         y = 0;
