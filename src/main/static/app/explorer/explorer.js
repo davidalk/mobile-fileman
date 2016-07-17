@@ -26,11 +26,11 @@ angular.module('myApp.explorer', [])
                 var tileWidth = 150, tileHeight = 175,
                     labelLength = parseInt(scope.labelLength), maxWidthForTiles = calcMaxWidthForTiles();
 
-                console.log('svgWidth: ' + svgWidth);
-
                 var directorySvgPath = 'M 118.222 24 h -62.222 v -6.222 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 h -36.444 c -5.4 0 -9.778 4.378 -9.778 9.778 v 100.445 c 0 5.4 4.378 9.77801 9.778 9.77801 h 108.445 c 5.4 0 9.77801 -4.378 9.77801 -9.778 v -84.445 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 Z';
                 var fileSvgPath = 'M17.778 0c-5.4 0-9.778 4.378-9.778 9.778v108.445c0 5.4 4.378 9.778 9.778 9.778h84.445c5.4 0 9.778-4.378 9.778-9.778v-86.222h-22.222c-5.4 0-9.778-4.378-9.778-9.778v-22.222h-62.222z';
                 var fileCornerSvgPath = 'M88 0v24h24z';
+                var files;
+
 
                 var svg = d3.select(element[0])
                     .append('svg')
@@ -44,10 +44,19 @@ angular.module('myApp.explorer', [])
                     }
                 });
 
+                scope.$watch('width', function (newValue, oldValue) {
+                    if (newValue !== oldValue && files) {
+                        svg.selectAll('.directory').remove();
+                        svg.selectAll('.file').remove();
+                        d3DataJoin(files)
+                    }
+                });
+
                 function listDirectory(directory) {
                     $http.get(url + directory)
                         .then(function (response) {
-                            d3DataJoin(response.data.files);
+                            files = response.data.files;
+                            d3DataJoin(files);
                         }, function (response) {
                             $log.error('Failed contacting files service ' + response);
                         })
@@ -59,6 +68,7 @@ angular.module('myApp.explorer', [])
                     var iconCount = 0;
                     svgHeight[scope.side] = 0;
 
+                    console.log('data join');
 
                     var directoryTiles = svg.selectAll('.directory')
                         .data(directories, function (d) {
@@ -125,7 +135,7 @@ angular.module('myApp.explorer', [])
 
                 function setSvgDimensions() {
                     var svg = d3.select(element[0]).select('svg');
-                    svg.attr('height', (svgHeight[scope.side] + 250) * scaleFactor).attr('width', '100%');
+                    svg.attr('height', (svgHeight[scope.side] + 300) * scaleFactor).attr('width', '100%');
                 }
 
                 function gTranslate(i) {

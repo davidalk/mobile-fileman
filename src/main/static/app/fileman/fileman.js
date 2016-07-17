@@ -19,8 +19,15 @@ angular.module('myApp.fileman', ['ui.router'])
         '$window',
         '$document',
         '$scope',
-        function ($window, $document, $scope) {
+        '$timeout',
+        function ($window, $document, $scope, $timeout) {
             $scope.explorerWidth = calculateExplorerWidth();
+
+            angular.element($window).bind('resize', function () {
+                $timeout(function () {
+                    $scope.explorerWidth = calculateExplorerWidth();
+                });
+            });
 
             function calculateExplorerWidth() {
                 var xsSize = 600;
