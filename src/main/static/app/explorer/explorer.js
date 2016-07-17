@@ -46,8 +46,6 @@ angular.module('myApp.explorer', [])
 
                 scope.$watch('width', function (newValue, oldValue) {
                     if (newValue !== oldValue && files) {
-                        svg.selectAll('.directory').remove();
-                        svg.selectAll('.file').remove();
                         d3DataJoin(files)
                     }
                 });
@@ -68,7 +66,8 @@ angular.module('myApp.explorer', [])
                     var iconCount = 0;
                     svgHeight[scope.side] = 0;
 
-                    console.log('data join');
+                    svg.selectAll('.directory').remove();
+                    svg.selectAll('.file').remove();
 
                     var directoryTiles = svg.selectAll('.directory')
                         .data(directories, function (d) {
