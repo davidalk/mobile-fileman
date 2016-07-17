@@ -11,16 +11,22 @@ angular.module('myApp.explorer', [])
                 restrict: 'E',
                 scope: {
                     side: '@',
-                    labelLength: '@'
+                    labelLength: '@',
+                    width: '<'
+
                 },
                 link: explorerLinkFunction
             };
 
             function explorerLinkFunction(scope, element) {
                 var url = '/rest/files';
-                var svgWidth = 1024, svgHeight = {},
-                    tileWidth = 150, tileHeight = 175,
+                var scaleFactor = 0.38;
+                var svgWidth = scope.width / scaleFactor;
+                var svgHeight = {};
+                var tileWidth = 150, tileHeight = 175,
                     labelLength = parseInt(scope.labelLength), maxWidthForTiles = calcMaxWidthForTiles();
+
+                console.log('svgWidth: ' + svgWidth);
 
                 var directorySvgPath = 'M 118.222 24 h -62.222 v -6.222 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 h -36.444 c -5.4 0 -9.778 4.378 -9.778 9.778 v 100.445 c 0 5.4 4.378 9.77801 9.778 9.77801 h 108.445 c 5.4 0 9.77801 -4.378 9.77801 -9.778 v -84.445 c 0 -5.4 -4.378 -9.778 -9.778 -9.778 Z';
                 var fileSvgPath = 'M17.778 0c-5.4 0-9.778 4.378-9.778 9.778v108.445c0 5.4 4.378 9.778 9.778 9.778h84.445c5.4 0 9.778-4.378 9.778-9.778v-86.222h-22.222c-5.4 0-9.778-4.378-9.778-9.778v-22.222h-62.222z';
@@ -30,7 +36,7 @@ angular.module('myApp.explorer', [])
                     .append('svg')
                     .attr('class', scope.side + '-svg')
                     .append('g')
-                    .attr('transform', 'translate(10, 30) scale(0.38, 0.38)');
+                    .attr('transform', 'translate(10, 30) scale(' + scaleFactor + ',' + scaleFactor + ')');
 
                 scope.$on('chooser:updateDirectory', function (event, side, directory) {
                     if (side === scope.side) {
@@ -118,9 +124,8 @@ angular.module('myApp.explorer', [])
                 }
 
                 function setSvgDimensions() {
-
                     var svg = d3.select(element[0]).select('svg');
-                    svg.attr('height', (svgHeight[scope.side] + 250) * 0.38).attr('width', '100%');
+                    svg.attr('height', (svgHeight[scope.side] + 250) * scaleFactor).attr('width', '100%');
                 }
 
                 function gTranslate(i) {
